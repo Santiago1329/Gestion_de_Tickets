@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('descripcion');
+            $table->string('archivo_adjunto')->nullable(); 
             $table->enum('estado', ['abierto', 'en_proceso', 'resuelto', 'cancelado', 're_abierto'])->default('abierto');
-            $table->enum('prioridad', ['baja', 'media', 'alta']);
+            $table->enum('prioridad', ['baja', 'media', 'alta'])->default('media');
             // LLaves foraneas para relacionar con categorias y usuarios
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('restrict'); // Si una categoria es eliminada, no se eliminarán los tickets asociados
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Si un usuario es eliminado, sus tickets también lo serán
