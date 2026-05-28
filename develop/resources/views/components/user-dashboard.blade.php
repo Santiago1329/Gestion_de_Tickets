@@ -1,9 +1,9 @@
-<div class="container-fluid bg-light min-vh-screen py-4">
+<div class="container-fluid min-vh-screen py-4">
     
     <div class="card shadow-sm border-0 border-start border-primary border-5 mb-4">
         <div class="card-body d-flex justify-content-between align-items-center">
             <div>
-                <h1 class="h3 mb-1 fw-bold text-dark">Panel de Soporte TICs</h1>
+                <h1 class="h3 mb-1 fw-bold">Panel de Soporte TICs</h1>
                 <p class="text-muted small mb-0">Bienvenido, {{ auth()->user()->name }} — Reporta y gestiona tus incidentes técnicos.</p>
             </div>
             <div class="text-end d-none d-sm-block">
@@ -25,21 +25,21 @@
         <div class="col-12 col-lg-5">
             <div class="card shadow-sm border-0 border-top border-primary border-4 h-100">
                 <div class="card-body p-4">
-                    <h2 class="h5 card-title fw-bold text-dark mb-4">
+                    <h2 class="h5 card-title fw-bold mb-4">
                         <i class="fa-solid fa-square-plus me-2 text-primary"></i> Registrar Nuevo Incidente
                     </h2>
 
                     <form wire:submit.prevent="guardarTicket" enctype="multipart/form-data">
                         
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-secondary small">¿Qué está fallando? *</label>
+                            <label class="form-label fw-semibold small">¿Qué está fallando? *</label>
                             <input type="text" wire:model="titulo" placeholder="Ej: No conecta la impresora" 
                                 class="form-control @error('titulo') is-invalid @enderror">
                             @error('titulo') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-secondary small">Categoría *</label>
+                            <label class="form-label fw-semibold small">Categoría *</label>
                             <select wire:model="categoria_id" class="form-select @error('categoria_id') is-invalid @enderror">
                                 <option value="">-- Selecciona una opción --</option>
                                 @foreach($categorias as $cat)
@@ -50,14 +50,14 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-secondary small">Descripción detallada *</label>
+                            <label class="form-label fw-semibold small">Descripción detallada *</label>
                             <textarea wire:model="descripcion" placeholder="Escribe los detalles aquí..." rows="4"
                                 class="form-control @error('descripcion') is-invalid @enderror"></textarea>
                             @error('descripcion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-semibold text-secondary small">
+                            <label class="form-label fw-semibold small">
                                 <i class="fa-solid fa-paperclip me-2 text-muted"></i> Adjuntar Evidencia (Opcional)
                             </label>
                             <input type="file" wire:model="evidencia" class="form-control @error('evidencia') is-invalid @enderror">
@@ -79,7 +79,7 @@
         <div class="col-12 col-lg-7">
             <div class="card shadow-sm border-0 border-top border-success border-4 h-100">
                 <div class="card-body p-4">
-                    <h2 class="h5 card-title fw-bold text-dark mb-4">
+                    <h2 class="h5 card-title fw-bold mb-4">
                         <i class="fa-solid fa-clock-history me-2 text-success"></i> Seguimiento de Mis Tickets
                     </h2>
 
@@ -91,17 +91,17 @@
                     @else
                         <div class="overflow-auto pe-2" style="max-height: 500px;">
                             @foreach($misTickets as $ticket)
-                                <div class="card mb-3 border-2 border-light hover-shadow transition">
+                                <div class="card mb-3 border-2 bor hover-shadow transition">
                                     <div class="card-body p-3">
                                         <div class="d-flex justify-content-between align-items-start gap-2">
                                             <div>
-                                                <span class="badge bg-light text-dark border font-monospace">#{{ $ticket->id }}</span>
-                                                <h3 class="h6 fw-bold text-dark mt-2 mb-1">{{ $ticket->titulo }}</h3>
+                                                <span class="badge border font-monospace">#{{ $ticket->id }}</span>
+                                                <h3 class="h6 fw-bold mt-2 mb-1">{{ $ticket->titulo }}</h3>
                                                 <p class="text-muted text-xs mb-2">
                                                     <span class="mx-1">•</span>
                                                     <i class="fa-solid fa-calendar me-1"></i> {{ $ticket->created_at->format('d/m/Y h:i A') }}
                                                 </p>
-                                                <p class="card-text text-secondary small bg-light p-2 rounded mb-2 text-truncate" style="max-width: 450px;">
+                                                <p class="card-text small p-2 rounded mb-2 text-truncate" style="max-width: 450px;">
                                                     {{ $ticket->descripcion }}
                                                 </p>
 
