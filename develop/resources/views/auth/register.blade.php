@@ -51,7 +51,7 @@
 
         <!-- Confirm Password -->
         <div class="mb-3">
-            <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
+            <label for="password_confirmation" class="form-label">{{ __('Confirmar contraseña') }}</label>
             <input
                 id="password_confirmation" 
                 type="password"
