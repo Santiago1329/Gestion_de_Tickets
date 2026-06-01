@@ -77,7 +77,10 @@ class UserDashboard extends Component
     {
         return view('components.user-dashboard', [
             'categorias' => Categoria::all(),
-            'misTickets' => Ticket::where('user_id', auth()->id())->latest()->get()
+            'misTickets' => Ticket::where('user_id', auth()->id())
+            ->with('categoria')
+            ->latest()
+            ->get()
         ]);
     }
 }
