@@ -17,6 +17,7 @@ class UserDashboard extends Component
     public $archivo_adjunto;
     public $categoria_id;
 
+    // Metodo para guardar un nuevo ticket
     public function guardarTicket()
     {
         // Validar datos del formulario
