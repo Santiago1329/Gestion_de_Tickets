@@ -35,13 +35,13 @@ class AdminDashboard extends Component
             ->when($this->filtroEstado, fn($q) => $q->where('estado', $this->filtroEstado))
             ->when($this->filtroCategoria, fn($q) => $q->where('categoria_id', $this->filtroCategoria))
             ->when($this->filtroPrioridad, fn($q) => $q->where('prioridad', $this->filtroPrioridad))
-            ->latest()
             ->get();
         
-        return view('livewire.admin-dashboard', [
+        return view('components.admin-dashboard', [
             'tickets' => $ticket,
             'categorias' => Categoria::all(),
-            'totalAbiertos' => Ticket::where('estado', ['abierto', 're_abierto'])->count(),
+            'totalTickets' => Ticket::count(),
+            'totalAbiertos' => Ticket::whereIn('estado', ['abierto', 're_abierto'])->count(),
             'totalEnProceso' => Ticket::where('estado', 'en_proceso')->count(),
             'totalResueltos' => Ticket::where('estado', 'resuelto')->count(),
         ]);

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // Componentes Livewire
 use App\Livewire\UserDashboard;
-// use App\Livewire\AdminDashboard;
+use App\Livewire\AdminDashboard;
 
 // Pagina de entrada (Login / Registro)
 Route::get('/', function () {
@@ -32,8 +32,8 @@ Route::middleware('auth')->group(function () {
     // Ruta para el dashboard del usuario
     Route::get('/user-dashboard', UserDashboard::class)->name('user.dashboard');
 
-    // Ruta para el dashboard del admin (descomentar si se implementa el componente)
-    // Route::get('/admin-dashboard', AdminDashboard::class)->name('admin.dashboard');
+    // Ruta para el dashboard del admin
+    Route::get('/admin-dashboard', AdminDashboard::class)->name('admin.dashboard');
     
     // Rutas para la gestión del perfil del usuario (De Breeze)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
