@@ -24,7 +24,7 @@ class UserDashboard extends Component
         $this->validate([
             'titulo' => 'required|max:150',
             'descripcion' => 'required',
-            'archivo_adjunto' => 'nullable|file|max:10240', // Máximo 10MB
+            'archivo_adjunto' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,gif,pdf',
             'categoria_id' => 'required|exists:categorias,id',
         ]);
 
