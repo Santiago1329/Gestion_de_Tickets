@@ -2,43 +2,43 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-// Componentes Livewire
 use App\Livewire\UserDashboard;
 use App\Livewire\AdminDashboard;
 
-// Pagina de entrada (Login / Registro)
+// Pagina de entrada — redirige al login o al dashboard según si está autenticado
 Route::get('/', function () {
-    // Si el usuario ya está autenticado, redirigir al dashboard
     if (auth()->check()) {
         return redirect()->route('dashboard');
     }
-    return view('welcome');
+    return redirect()->route('login');
 });
 
-// Recibe los usuarios logueados y los desvia segun su rol
+// Distribuidor de roles — redirige según el rol del usuario
 Route::get('/dashboard', function () {
     if (auth()->user()->rol === 'admin') {
         return redirect()->route('admin.dashboard');
     }
-
-    // Si no es admin se asume que su rol es cliente (user)
     return redirect()->route('user.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Rutas protegidas
-Route::middleware('auth')->group(function () {
-
-    // Ruta para el dashboard del usuario
+// Rutas para usuarios normales
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user-dashboard', UserDashboard::class)->name('user.dashboard');
 
-    // Ruta para el dashboard del admin
-    Route::get('/admin-dashboard', AdminDashboard::class)->name('admin.dashboard');
-    
-    // Rutas para la gestión del perfil del usuario (De Breeze)
+    // Perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Rutas exclusivas para admin
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/admin-dashboard', function () {
+        if (auth()->user()->rol !== 'admin') {
+            return redirect()->route('user.dashboard');
+        }
+        return app(AdminDashboard::class)->render();
+    })->name('admin.dashboard');
 });
 
 require __DIR__.'/auth.php';
