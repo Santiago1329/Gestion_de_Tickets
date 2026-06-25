@@ -84,7 +84,7 @@
                     </select>
                 </div>
                 <div class="col-12 col-md-6 d-flex justify-content-end">
-                    <button class="btn btn-danger px-3 fw-bold" data-bs-toggle="modal" data-bs-target="#modalCrearTicket">
+                    <button class="btn btn-danger px-3 fw-bold" wire:click="abrirModalCrear" data-bs-target="#modalCrearTicket">
                         <i class="fa-solid fa-plus me-1"></i> Nuevo Ticket
                     </button>
                 </div>
@@ -159,7 +159,6 @@
                                             </button>
                                             {{-- Editar --}}
                                             <button wire:click="abrirEditar({{ $ticket->id }})"
-                                                data-bs-toggle="modal" data-bs-target="#modalEditar"
                                                 class="btn btn-sm btn-outline-primary py-1 px-2">
                                                 <i class="fa-solid fa-pen"></i>
                                             </button>
@@ -185,6 +184,12 @@
 
     <!-- Cerrar modales al terminar una accion -->
     <script>
+        window.addEventListener('abrirModalEditar', () => {
+            new bootstrap.Modal(document.getElementById('modalEditar')).show();
+        });
+        window.addEventListener('abrirModalCrearTicket', () => {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalCrearTicket')).show();
+        });
         window.addEventListener('cerrarModalCrear', () => {
             bootstrap.Modal.getInstance(document.getElementById('modalCrearTicket'))?.hide();
         });

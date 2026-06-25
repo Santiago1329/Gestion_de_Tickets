@@ -44,13 +44,20 @@ class AdminDashboard extends Component
         $this->ticketEditarId = $id;
         $this->editarEstado = $ticket->estado;
         $this->editarPrioridad = $ticket->prioridad;
+        $this->dispatch('abrirModalEditar');
+    }
+
+    public function abrirModalCrear()
+    {
+        $this->reset(['titulo', 'descripcion', 'categoria_id', 'archivo_adjunto', 'prioridad', 'ticketEditarId', 'editarEstado', 'editarPrioridad']);
+        $this->dispatch('abrirModalCrearTicket');
     }
 
     // Guardar cambios del modal editar
     public function guardarEdicion()
     {
         $this->validate([
-            'editarEstado' => 'required|in:abierto,en_proceso,resuelto,re_abierto, cancelado',
+            'editarEstado' => 'required|in:abierto,en_proceso,resuelto,re_abierto,cancelado',
             'editarPrioridad' => 'required|in:baja,media,alta',
         ]);
 
@@ -65,38 +72,39 @@ class AdminDashboard extends Component
     }
 
     // Crear ticket desde Admin
-    public function guadarTicket()
+    public function guardarTicket()
     {
-        // Validar datos del formulario
-        $this->validate([
-            'titulo' => 'required|max:150',
-            'descripcion' => 'required',
-            'archivo_adjunto' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,gif,pdf',
-            'categoria_id' => 'required|exists:categorias,id',
-            'prioridad' => 'required|in:baja,media,alta',
-        ]);
+        try {
+            $this->validate([
+                'titulo' => 'required|max:150',
+                'descripcion' => 'required',
+                'archivo_adjunto' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,gif,pdf',
+                'categoria_id' => 'required|exists:categorias,id',
+                'prioridad' => 'required|in:baja,media,alta',
+            ]);
 
-        $rutaArchivo = null;
+            $rutaArchivo = null;
+            if ($this->archivo_adjunto) {
+                $rutaArchivo = $this->archivo_adjunto->store('archivos_adjuntos', 'public');
+            }
 
-        // Si el usuario subio un archivo, lo guardamos en la carpeta 'archivos_adjuntos'
-        if ($this->archivo_adjunto) {
-            $rutaArchivo = $this->archivo_adjunto->store('archivos_adjuntos', 'public');
+            Ticket::create([
+                'titulo' => $this->titulo,
+                'descripcion' => $this->descripcion,
+                'archivo_adjunto' => $rutaArchivo,
+                'prioridad' => $this->prioridad,
+                'categoria_id' => $this->categoria_id,
+                'user_id' => auth()->id(),
+                'estado' => 'abierto',
+            ]);
+
+            $this->reset(['titulo', 'descripcion', 'categoria_id', 'archivo_adjunto', 'prioridad']);
+            session()->flash('mensaje', 'Ticket creado exitosamente.');
+            $this->dispatch('cerrarModalCrear');
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
         }
-
-        // Crear el nuevo ticket
-        Ticket::create([
-            'titulo' => $this->titulo,
-            'descripcion' => $this->descripcion,
-            'archivo_adjunto' => $rutaArchivo,
-            'prioridad' => $this->prioridad,
-            'categoria_id' => $this->categoria_id,
-            'user_id' => auth()->id(),
-            'estado' => 'abierto', // Estado inicial del ticket
-        ]);
-
-        $this->reset(['titulo', 'descripcion', 'categoria_id', 'archivo_adjunto', 'prioridad']);
-        session()->flash('mensaje', 'Ticket creado exitosamente.');
-        $this->dispatch('cerrarModalCrear');
     }
 
     // Metodo para renderizar la vista del dashboarad de Administrador

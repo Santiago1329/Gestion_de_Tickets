@@ -12,11 +12,11 @@
                     <label class="form-label fw-semibold small">Estado</label>
                     <select wire:model="editarEstado"
                         class="form-select @error('editarEstado') is-invalid @enderror">
-                        <option value="abierto">Abierto</option>
-                        <option value="en_proceso">En Proceso</option>
-                        <option value="resuelto">Resuelto</option>
-                        <option value="cancelado">Cancelado</option>
-                        <option value="re_abierto">Re Abierto</option>
+                        <option value="abierto" @selected($editarEstado == 'abierto')>Abierto</option>
+                        <option value="en_proceso" @selected($editarEstado == 'en_proceso')>En Proceso</option>
+                        <option value="resuelto" @selected($editarEstado == 'resuelto')>Resuelto</option>
+                        <option value="cancelado" @selected($editarEstado == 'cancelado')>Cancelado</option>
+                        <option value="re_abierto" @selected($editarEstado == 're_abierto')>Reabierto</option>
                     </select>
                     @error('editarEstado') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
@@ -24,9 +24,9 @@
                     <label class="form-label fw-semibold small">Prioridad</label>
                     <select wire:model="editarPrioridad"
                         class="form-select @error('editarPrioridad') is-invalid @enderror">
-                        <option value="baja">Baja</option>
-                        <option value="media">Media</option>
-                        <option value="alta">Alta</option>
+                        <option value="baja" @selected($editarPrioridad == 'baja')>Baja</option>
+                        <option value="media" @selected($editarPrioridad == 'media')>Media</option>
+                        <option value="alta" @selected($editarPrioridad == 'alta')>Alta</option>
                     </select>
                     @error('editarPrioridad') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
