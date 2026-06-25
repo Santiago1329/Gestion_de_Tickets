@@ -116,7 +116,7 @@
                                             <!-- Info Izquierda -->
                                             <div class="flex-grow-1 min-w-0">
                                                 <div class="d-flex align-items-center gap-2 mb-1">
-                                                    <span class="badge border font-monospace text-body">#{{ $ticket->id }}</span>
+                                                    <span class="badge border font-monospace text-body">TIC-{{ str_pad($ticket->id, 4, '0', STR_PAD_LEFT) }}</span>
                                                     <h6 class="fw-bold mb-0">{{ $ticket->titulo }}</h6>
                                                 </div>
 

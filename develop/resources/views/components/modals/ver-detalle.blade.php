@@ -11,8 +11,8 @@
                 @if($ticketDetalle)
                     <div class="row g-3">
                         <div class="col-6">
-                            <div class="text-muted small text-uppercase">ID</div>
-                            <div class="fw-bold font-monospace">#{{ $ticketDetalle->id }}</div>
+                            <div class="text-muted small text-uppercase">Codigo</div>
+                            <div class="fw-bold font-monospace">TIC-{{ str_pad($ticketDetalle->id, 4, '0', STR_PAD_LEFT) }}</div>
                         </div>
                         <div class="col-6">
                             <div class="text-muted small text-uppercase">Fecha</div>
