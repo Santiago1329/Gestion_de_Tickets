@@ -57,7 +57,7 @@
         <div class="card-body p-3">
             <div class="row g-2">
 
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-2">
                     <select wire:model.live="filtroEstado" class="form-select form-select-sm">
                         <option value="">Todos los estados</option>
                         <option value="abierto">Abierto</option>
@@ -67,7 +67,7 @@
                         <option value="re_abierto">Reabierto</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-2">
                     <select wire:model.live="filtroCategoria" class="form-select form-select-sm">
                         <option value="">Todas las categorias</option>
                         @foreach ($categorias as $cat)
@@ -75,7 +75,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-2">
                     <select wire:model.live="filtroPrioridad" class="form-select form-select-sm">
                         <option value="">Todas las prioridades</option>
                         <option value="baja">Baja</option>
@@ -83,7 +83,11 @@
                         <option value="alta">Alta</option>
                     </select>
                 </div>
-
+                <div class="col-12 col-md-6 d-flex justify-content-end">
+                    <button class="btn btn-danger px-3 fw-bold" data-bs-toggle="modal" data-bs-target="#modalCrearTicket">
+                        <i class="fa-solid fa-plus me-1"></i> Nuevo Ticket
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -97,7 +101,7 @@
                     <p class="text-muted mb-0">No hay tickets para mostrar</p>
                 </div>
             @else
-                <div class="table-responsive">
+                <div class="table-responsive rounded">
                     <table class="table table-hover align-middle mb-0">
                         <thead>
                             <tr>
@@ -124,39 +128,42 @@
                                     <td class="small">{{ $ticket->categoria->nombre ?? '-' }}</td>
 
                                     <td>
-                                        <select wire:change="cambiarEstado({{ $ticket->id }}, $event.target.value)"
-                                            class="form-select form-select-sm
-                                                @if($ticket->estado == 'abierto') border-success text-success
-                                                @elseif($ticket->estado == 'en_proceso') border-primary text-primary
-                                                @elseif($ticket->estado == 'resuelto') border-secondary text-secondary
-                                                @elseif($ticket->estado == 'cancelado') border-danger text-danger
-                                                @elseif($ticket->estado == 'reabierto') border-warning text-warning
-                                                @endif"
-                                            style="min-width: 120px;">
-                                            <option value="abierto" {{ $ticket->estado == 'abierto' ? 'selected' : '' }}>Abierto</option>
-                                            <option value="en_proceso" {{ $ticket->estado == 'en_proceso' ? 'selected' : '' }}>En Proceso</option>
-                                            <option value="resuelto" {{ $ticket->estado == 'resuelto' ? 'selected' : '' }}>Resuelto</option>
-                                            <option value="cancelado" {{ $ticket->estado == 'cancelado' ? 'selected' : '' }}>Cancelado</option>
-                                            <option value="reabierto" {{ $ticket->estado == 'reabierto' ? 'selected' : '' }}>Reabierto</option>
-                                        </select>
+                                        <span class="badge text-uppercase
+                                            @if ($ticket->estado == 'abierto') bg-secondary-subtle text-secondary border border-secondary
+                                            @elseif ($ticket->estado == 'en_proceso') bg-primary-subtle text-primary border border-primary
+                                            @elseif ($ticket->estado == 'resuelto') bg-success-subtle text-success border border-success
+                                            @elseif ($ticket->estado == 'cancelado') bg-danger-subtle text-danger border border-danger
+                                            @elseif ($ticket->estado == 're_abierto') bg-warning-subtle text-warning border border-warning
+                                            @endif
+                                        ">
+                                            {{ str_replace('_', ' ', $ticket->estado) }}
+                                        </span>
                                     </td>
                                     <td>
-                                        <select wire:change="cambiarPrioridad({{ $ticket->id }}, $event.target.value)"
-                                            class="form-select form-select-sm" style="min-width: 90px;">
-                                            <option value="baja" {{ $ticket->prioridad == 'baja' ? 'selected' : '' }}>Baja</option>
-                                            <option value="media" {{ $ticket->prioridad == 'media' ? 'selected' : '' }}>Media</option>
-                                            <option value="alta" {{ $ticket->prioridad == 'alta' ? 'selected' : '' }}>Alta</option>
-                                        </select>
+                                        <span class="badge text-uppercase
+                                            @if($ticket->prioridad == 'alta') bg-danger-subtle text-danger border border-danger
+                                            @elseif($ticket->prioridad == 'media') bg-warning-subtle text-warning border border-warning
+                                            @elseif($ticket->prioridad == 'baja') bg-success-subtle text-success border border-success
+                                            @endif">
+                                            {{ $ticket->prioridad }}
+                                        </span>
                                     </td>
                                     <td class="small text-muted">{{ $ticket->created_at->format('d/m/Y h:i A') }}</td>
                                     <td class="text-end pe-3">
-                                        @if($ticket->archivo_adjunto)
-                                            <a href="{{ asset('storage/' . $ticket->archivo_adjunto) }}"
-                                                target="_blank"
-                                                class="btn btn-sm btn-outline-secondary py-0 px-2">
-                                                <i class="fa-solid fa-paperclip"></i>
-                                            </a>
-                                        @endif
+                                        <div class="d-flex justify-content-end gap-1">
+                                            {{-- Ver detalle --}}
+                                            <button wire:click="verDetalle({{ $ticket->id }})"
+                                                data-bs-toggle="modal" data-bs-target="#modalDetalle"
+                                                class="btn btn-sm btn-outline-secondary py-1 px-2">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+                                            {{-- Editar --}}
+                                            <button wire:click="abrirEditar({{ $ticket->id }})"
+                                                data-bs-toggle="modal" data-bs-target="#modalEditar"
+                                                class="btn btn-sm btn-outline-primary py-1 px-2">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -167,4 +174,22 @@
         </div>
     </div>
 
+    <!-- Modal Ver Detalle -->
+    @include('components.modals.ver-detalle')
+
+    <!-- Modal Editar Ticket -->
+    @include('components.modals.editar-ticket')
+
+    <!-- Modal Crear Ticket -->
+    @include('components.modals.crear-ticket')
+
+    <!-- Cerrar modales al terminar una accion -->
+    <script>
+        window.addEventListener('cerrarModalCrear', () => {
+            bootstrap.Modal.getInstance(document.getElementById('modalCrearTicket'))?.hide();
+        });
+        window.addEventListener('cerrarModalEditar', () => {
+            bootstrap.Modal.getInstance(document.getElementById('modalEditar'))?.hide();
+        });
+    </script>
 </div>
