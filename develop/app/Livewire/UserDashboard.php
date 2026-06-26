@@ -17,13 +17,14 @@ class UserDashboard extends Component
     public $archivo_adjunto;
     public $categoria_id;
 
+    // Metodo para guardar un nuevo ticket
     public function guardarTicket()
     {
         // Validar datos del formulario
         $this->validate([
             'titulo' => 'required|max:150',
             'descripcion' => 'required',
-            'archivo_adjunto' => 'nullable|file|max:10240', // Máximo 10MB
+            'archivo_adjunto' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,gif,pdf',
             'categoria_id' => 'required|exists:categorias,id',
         ]);
 
@@ -77,7 +78,10 @@ class UserDashboard extends Component
     {
         return view('components.user-dashboard', [
             'categorias' => Categoria::all(),
-            'misTickets' => Ticket::where('user_id', auth()->id())->latest()->get()
+            'misTickets' => Ticket::where('user_id', auth()->id())
+            ->with('categoria')
+            ->latest()
+            ->get()
         ]);
     }
 }

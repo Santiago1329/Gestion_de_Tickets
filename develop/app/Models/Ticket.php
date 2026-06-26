@@ -21,13 +21,13 @@ class Ticket extends Model
     ];
 
     // Relacion: Un ticket pertenece a una categoria
-    public function categorias()
+    public function categoria()
     {
         return $this->belongsTo(Categoria::class);
     }
 
     // Relacion: Un ticket pertenece a un usuario
-    public function usuarios()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

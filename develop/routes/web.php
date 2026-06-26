@@ -2,40 +2,37 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-// Componentes Livewire
 use App\Livewire\UserDashboard;
-// use App\Livewire\AdminDashboard;
+use App\Livewire\AdminDashboard;
 
-// Pagina de entrada (Login / Registro)
+// Pagina de entrada
 Route::get('/', function () {
-    // Si el usuario ya está autenticado, redirigir al dashboard
     if (auth()->check()) {
         return redirect()->route('dashboard');
     }
-    return view('welcome');
+    return redirect()->route('login');
 });
 
-// Recibe los usuarios logueados y los desvia segun su rol
+// Distribuidor de roles
 Route::get('/dashboard', function () {
     if (auth()->user()->rol === 'admin') {
         return redirect()->route('admin.dashboard');
     }
-
-    // Si no es admin se asume que su rol es cliente (user)
     return redirect()->route('user.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Rutas protegidas
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
-    // Ruta para el dashboard del usuario
+    // Usuario
     Route::get('/user-dashboard', UserDashboard::class)->name('user.dashboard');
 
-    // Ruta para el dashboard del admin (descomentar si se implementa el componente)
-    // Route::get('/admin-dashboard', AdminDashboard::class)->name('admin.dashboard');
-    
-    // Rutas para la gestión del perfil del usuario (De Breeze)
+    // Admin — protegido con middleware de rol
+    Route::get('/admin-dashboard', AdminDashboard::class)
+        ->middleware('es.admin')
+        ->name('admin.dashboard');
+
+    // Perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
