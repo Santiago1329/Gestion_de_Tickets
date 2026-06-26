@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 @if($ticketDetalle)
-                    <div class="row g-3">
+                    <div class="row g-2">
                         <div class="col-6">
                             <div class="text-muted small text-uppercase">Codigo</div>
                             <div class="fw-bold font-monospace">TIC-{{ str_pad($ticketDetalle->id, 4, '0', STR_PAD_LEFT) }}</div>
@@ -41,6 +41,22 @@
                                 </a>
                             </div>
                         @endif
+                        <div class="col-12">
+                            <div class="text-muted small text-uppercase mb-2">Contacto</div>
+                            <div class="p-3 bg-body-secondary rounded d-flex flex-wrap gap-3">
+                                <a href="mailto:{{ $ticketDetalle->user->email }}"
+                                    class="btn btn-sm btn-outline-secondary">
+                                    <i class="fa-solid fa-envelope me-1"></i> {{ $ticketDetalle->user->email }}
+                                </a>
+                                @if($ticketDetalle->user->telefono)
+                                    <a href="https://wa.me/57{{ preg_replace('/\D/', '', $ticketDetalle->user->telefono) }}"
+                                        target="_blank"
+                                        class="btn btn-sm btn-outline-success">
+                                        <i class="fa-brands fa-whatsapp me-1"></i> {{ $ticketDetalle->user->telefono }}
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
                         <div class="col-12">
                             <div class="text-muted small text-uppercase mb-1">Descripción</div>
                             <div class="p-3 bg-body-secondary rounded small">{{ $ticketDetalle->descripcion }}</div>

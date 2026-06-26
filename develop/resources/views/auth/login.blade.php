@@ -151,6 +151,18 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono (opcional)</label>
+                    <input id="telefono" type="text" name="telefono"
+                        value="{{ old('telefono') }}"
+                        class="form-control @error('telefono') is-invalid @enderror"
+                        placeholder="Ej: 3001234567"
+                        autocomplete="tel">
+                    @error('telefono')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label for="reg_password" class="form-label">Contraseña</label>
                     <input id="reg_password" type="password" name="password"
                         class="form-control @error('password') is-invalid @enderror"
