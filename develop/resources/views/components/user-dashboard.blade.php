@@ -1,4 +1,4 @@
-<div class="container-fluid py-4">
+<div class="container-fluid">
 
     <!-- Header -->
     <div class="card shadow-sm border-0 border-start border-primary border-5 mb-4">
