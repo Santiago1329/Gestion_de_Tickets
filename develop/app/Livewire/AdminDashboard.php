@@ -114,6 +114,7 @@ class AdminDashboard extends Component
             ->when($this->filtroEstado, fn($q) => $q->where('estado', $this->filtroEstado))
             ->when($this->filtroCategoria, fn($q) => $q->where('categoria_id', $this->filtroCategoria))
             ->when($this->filtroPrioridad, fn($q) => $q->where('prioridad', $this->filtroPrioridad))
+            ->latest()
             ->get();
         
         return view('components.admin-dashboard', [
