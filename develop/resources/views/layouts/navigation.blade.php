@@ -24,8 +24,13 @@
             <!-- Menu usuario Derecha -->
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        {{ Auth::user()->name }}
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+                        <div class="d-flex flex-column lh-sm">
+                            <span>{{ Auth::user()->name }}</span>
+                            <small class="text-muted" style="font-size: 11px;">
+                                {{ Auth::user()->area ?? 'Sin área' }}
+                            </small>
+                        </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>

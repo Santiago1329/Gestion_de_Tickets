@@ -21,7 +21,7 @@
                         <div class="col-6">
                             <div class="text-muted small text-uppercase">Usuario</div>
                             <div class="fw-semibold">{{ $ticketDetalle->user->name }}</div>
-                            <div class="text-muted small">{{ $ticketDetalle->user->email }}</div>
+                            <div class="text-muted small">{{ $ticketDetalle->user->area ?? 'Sin área' }}</div>
                         </div>
                         <div class="col-6">
                             <div class="text-muted small text-uppercase">Categoría</div>

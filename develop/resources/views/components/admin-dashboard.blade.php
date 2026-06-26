@@ -122,7 +122,7 @@
                                     <td class="ps-3 font-monospace text-muted">TIC-{{ str_pad($ticket->id, 4, '0', STR_PAD_LEFT) }}</td>
                                     <td>
                                         <div class="fw-semibold small">{{ $ticket->user->name }}</div>
-                                        <div class="text-muted" style="font-size: 11px;">{{ $ticket->user->email }}</div>
+                                        <div class="text-muted" style="font-size: 11px;">{{ $ticket->user->area ?? 'Sin área' }}</div>
                                     </td>
                                     <td class="fw-semibold small">{{ $ticket->titulo }}</td>
                                     <td class="small">{{ $ticket->categoria->nombre ?? '-' }}</td>
