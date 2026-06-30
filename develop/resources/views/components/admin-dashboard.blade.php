@@ -153,7 +153,6 @@
                                         <div class="d-flex justify-content-end gap-1">
                                             {{-- Ver detalle --}}
                                             <button wire:click="verDetalle({{ $ticket->id }})"
-                                                data-bs-toggle="modal" data-bs-target="#modalDetalle"
                                                 class="btn btn-sm btn-outline-secondary py-1 px-2">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
@@ -201,6 +200,9 @@
         });
         window.addEventListener('cerrarModalEditar', () => {
             bootstrap.Modal.getInstance(document.getElementById('modalEditar'))?.hide();
+        });
+        window.addEventListener('abrirModalDetalle', () => {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalDetalle')).show();
         });
     </script>
 </div>

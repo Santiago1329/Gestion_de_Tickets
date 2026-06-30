@@ -37,6 +37,7 @@ class AdminDashboard extends Component
     public function verDetalle($id)
     {
         $this->ticketDetalle = Ticket::with(['categoria', 'user'])->findOrFail($id);
+        $this->dispatch('abrirModalDetalle');
     }
 
     // Abrir modal editar
