@@ -118,7 +118,7 @@
 
                         <tbody>
                             @foreach($tickets as $ticket)
-                                <tr>
+                                <tr wire:key="ticket-{{ $ticket->id }}">
                                     <td class="ps-3 font-monospace text-muted">TIC-{{ str_pad($ticket->id, 4, '0', STR_PAD_LEFT) }}</td>
                                     <td>
                                         <div class="fw-semibold small">{{ $ticket->user->name }}</div>
@@ -154,28 +154,18 @@
                                             {{-- Ver detalle --}}
                                             <button wire:click="verDetalle({{ $ticket->id }})"
                                                 wire:loading.attr="disabled"
-                                                wire:target="verDetalle({{ $ticket->id }})"
+                                                wire:target="verDetalle"
                                                 class="btn btn-sm btn-outline-secondary py-1 px-2">
-                                                <span wire:loading.remove wire:target="verDetalle({{ $ticket->id }})">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </span>
-                                                <span wire:loading wire:target="verDetalle({{ $ticket->id }})">
-                                                    <span class="spinner-border spinner-border-sm"></span>
-                                                </span>
+                                                <i class="fa-solid fa-eye"></i>
                                             </button>
 
                                             {{-- Editar --}}
                                             @if($ticket->estado !== 'cancelado')
                                                 <button wire:click="abrirEditar({{ $ticket->id }})"
                                                     wire:loading.attr="disabled"
-                                                    wire:target="abrirEditar({{ $ticket->id }})"
+                                                    wire:target="abrirEditar"
                                                     class="btn btn-sm btn-outline-primary py-1 px-2">
-                                                    <span wire:loading.remove wire:target="abrirEditar({{ $ticket->id }})">
-                                                        <i class="fa-solid fa-pen"></i>
-                                                    </span>
-                                                    <span wire:loading wire:target="abrirEditar({{ $ticket->id }})">
-                                                        <span class="spinner-border spinner-border-sm"></span>
-                                                    </span>
+                                                    <i class="fa-solid fa-pen"></i>
                                                 </button>
                                             @endif
                                         </div>
@@ -205,16 +195,16 @@
     <!-- Cerrar modales al terminar una accion -->
     <script>
         window.addEventListener('abrirModalEditar', () => {
-            new bootstrap.Modal(document.getElementById('modalEditar')).show();
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalEditar')).show();
         });
         window.addEventListener('abrirModalCrearTicket', () => {
             bootstrap.Modal.getOrCreateInstance(document.getElementById('modalCrearTicket')).show();
         });
         window.addEventListener('cerrarModalCrear', () => {
-            bootstrap.Modal.getInstance(document.getElementById('modalCrearTicket'))?.hide();
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalCrearTicket')).hide();
         });
         window.addEventListener('cerrarModalEditar', () => {
-            bootstrap.Modal.getInstance(document.getElementById('modalEditar'))?.hide();
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalEditar')).hide();
         });
         window.addEventListener('abrirModalDetalle', () => {
             bootstrap.Modal.getOrCreateInstance(document.getElementById('modalDetalle')).show();
