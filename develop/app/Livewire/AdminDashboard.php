@@ -4,12 +4,13 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use App\Models\Ticket;
 use App\Models\Categoria;
 
 class AdminDashboard extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithPagination;
     
     // Filtros
     public $filtroEstado = '';
@@ -107,6 +108,22 @@ class AdminDashboard extends Component
         $this->dispatch('cerrarModalCrear');
     }
 
+    // Metodos de reseteo
+    public function updatingFiltroEstado()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFiltroCategoria()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFiltroPrioridad()
+    {
+        $this->resetPage();
+    }
+
     // Metodo para renderizar la vista del dashboarad de Administrador
     public function render()
     {
@@ -115,7 +132,7 @@ class AdminDashboard extends Component
             ->when($this->filtroCategoria, fn($q) => $q->where('categoria_id', $this->filtroCategoria))
             ->when($this->filtroPrioridad, fn($q) => $q->where('prioridad', $this->filtroPrioridad))
             ->latest()
-            ->get();
+            ->paginate(10);
         
         return view('components.admin-dashboard', [
             'tickets' => $ticket,

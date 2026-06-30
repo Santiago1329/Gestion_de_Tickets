@@ -171,6 +171,10 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <div class="p-3">
+                    {{ $tickets->links() }}
+                </div>
             @endif
         </div>
     </div>
