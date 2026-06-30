@@ -172,7 +172,7 @@
                 </div>
                 
                 <div class="p-3">
-                    {{ $tickets->links() }}
+                    {{ $tickets->links('pagination::bootstrap-5') }}
                 </div>
             @endif
         </div>
