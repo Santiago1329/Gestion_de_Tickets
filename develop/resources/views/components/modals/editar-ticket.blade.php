@@ -33,8 +33,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button wire:click="guardarEdicion" class="btn btn-primary fw-bold">
-                    <i class="fa-solid fa-floppy-disk me-1"></i> Guardar
+                <button wire:click="guardarEdicion" class="btn btn-primary fw-bold" wire:loading.attr="disabled" wire:target="guardarEdicion">
+                    <span wire:loading.remove wire:target="guardarEdicion">
+                        <i class="fa-solid fa-floppy-disk me-1"></i> Guardar
+                    </span>
+                    <span wire:loading wire:target="guardarEdicion">
+                        <span class="spinner-border spinner-border-sm me-2"></span> Guardando...
+                    </span>
                 </button>
             </div>
         </div>

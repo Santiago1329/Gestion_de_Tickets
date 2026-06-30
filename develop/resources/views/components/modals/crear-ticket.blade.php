@@ -60,8 +60,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button wire:click="guardarTicket" class="btn btn-danger fw-bold">
-                        <i class="fa-solid fa-paper-plane me-1"></i> Crear Ticket
+                    <button type="submit" class="btn btn-danger fw-bold" wire:loading.attr="disabled" wire:target="guardarTicket">
+                        <span wire:loading.remove wire:target="guardarTicket">
+                            <i class="fa-solid fa-paper-plane me-1"></i> Crear Ticket
+                        </span>
+                        <span wire:loading wire:target="guardarTicket">
+                            <span class="spinner-border spinner-border-sm me-2"></span> Creando...
+                        </span>
                     </button>
                 </div>
             </form>

@@ -86,7 +86,12 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary bg-gradient w-100 py-2 fw-bold">Enviar Ticket</button>
+                        <button type="submit" class="btn btn-primary bg-gradient w-100 py-2 fw-bold" wire:loading.attr="disabled" wire:target="guardarTicket">
+                            <span wire:loading.remove wire:target="guardarTicket">Enviar Ticket</span>
+                            <span wire:loading wire:target="guardarTicket">
+                                <span class="spinner-border spinner-border-sm me-2"></span> Enviando...
+                            </span>
+                        </button>
 
                     </form>
                 </div>
