@@ -153,14 +153,29 @@
                                         <div class="d-flex justify-content-end gap-1">
                                             {{-- Ver detalle --}}
                                             <button wire:click="verDetalle({{ $ticket->id }})"
+                                                wire:loading.attr="disabled"
+                                                wire:target="verDetalle({{ $ticket->id }})"
                                                 class="btn btn-sm btn-outline-secondary py-1 px-2">
-                                                <i class="fa-solid fa-eye"></i>
+                                                <span wire:loading.remove wire:target="verDetalle({{ $ticket->id }})">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </span>
+                                                <span wire:loading wire:target="verDetalle({{ $ticket->id }})">
+                                                    <span class="spinner-border spinner-border-sm"></span>
+                                                </span>
                                             </button>
+
                                             {{-- Editar --}}
                                             @if($ticket->estado !== 'cancelado')
                                                 <button wire:click="abrirEditar({{ $ticket->id }})"
+                                                    wire:loading.attr="disabled"
+                                                    wire:target="abrirEditar({{ $ticket->id }})"
                                                     class="btn btn-sm btn-outline-primary py-1 px-2">
-                                                    <i class="fa-solid fa-pen"></i>
+                                                    <span wire:loading.remove wire:target="abrirEditar({{ $ticket->id }})">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </span>
+                                                    <span wire:loading wire:target="abrirEditar({{ $ticket->id }})">
+                                                        <span class="spinner-border spinner-border-sm"></span>
+                                                    </span>
                                                 </button>
                                             @endif
                                         </div>
