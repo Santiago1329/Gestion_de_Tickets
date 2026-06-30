@@ -12,11 +12,11 @@
                     <label class="form-label fw-semibold small">Estado</label>
                     <select wire:model="editarEstado"
                         class="form-select @error('editarEstado') is-invalid @enderror">
-                        <option value="abierto" @selected($editarEstado == 'abierto')>Abierto</option>
-                        <option value="en_proceso" @selected($editarEstado == 'en_proceso')>En Proceso</option>
-                        <option value="resuelto" @selected($editarEstado == 'resuelto')>Resuelto</option>
-                        <option value="cancelado" @selected($editarEstado == 'cancelado')>Cancelado</option>
-                        <option value="re_abierto" @selected($editarEstado == 're_abierto')>Reabierto</option>
+                        @foreach($estadosDisponibles as $estado)
+                            <option value="{{ $estado }}" @selected($editarEstado == $estado)>
+                                {{ ucfirst(str_replace('_', ' ', $estado)) }}
+                            </option>
+                        @endforeach
                     </select>
                     @error('editarEstado') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>

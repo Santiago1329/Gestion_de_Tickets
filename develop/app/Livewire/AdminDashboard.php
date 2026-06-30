@@ -30,6 +30,7 @@ class AdminDashboard extends Component
     public $ticketEditarId = null;
     public $editarEstado = "";
     public $editarPrioridad = "";
+    public $estadosDisponibles = [];
 
     // Abrir modal detalle
     public function verDetalle($id)
@@ -44,6 +45,7 @@ class AdminDashboard extends Component
         $this->ticketEditarId = $id;
         $this->editarEstado = $ticket->estado;
         $this->editarPrioridad = $ticket->prioridad;
+        $this->estadosDisponibles = $ticket->estadosDisponibles();
         $this->dispatch('abrirModalEditar');
     }
 
@@ -56,17 +58,20 @@ class AdminDashboard extends Component
     // Guardar cambios del modal editar
     public function guardarEdicion()
     {
+        $ticket = Ticket::findOrFail($this->ticketEditarId);
+        $estadosValidos = $ticket->estadosDisponibles();
+
         $this->validate([
-            'editarEstado' => 'required|in:abierto,en_proceso,resuelto,re_abierto,cancelado',
+            'editarEstado' => 'required|in:' . implode(',', $estadosValidos),
             'editarPrioridad' => 'required|in:baja,media,alta',
         ]);
 
-        Ticket::findOrFail($this->ticketEditarId)->update([
+        $ticket->update([
             'estado' => $this->editarEstado,
             'prioridad' => $this->editarPrioridad,
         ]);
 
-        $this->reset(['ticketEditarId', 'editarEstado', 'editarPrioridad']);
+        $this->reset(['ticketEditarId', 'editarEstado', 'editarPrioridad', 'estadosDisponibles']);
         session()->flash('mensaje', 'El ticket ha sido actualizado');
         $this->dispatch('cerrarModalEditar');
     }

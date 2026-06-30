@@ -20,6 +20,19 @@ class Ticket extends Model
         'user_id',
     ];
 
+    // Metodo con los estados disponibles para los tickets
+    public function estadosDisponibles(): array
+    {
+        return match($this->estado) {
+            'abierto' => ['abierto', 'en_proceso', 'cancelado'],
+            'en_proceso' => ['en_proceso', 'resuelto', 'cancelado'],
+            'resuelto' => ['resuelto', 're_abierto'],
+            're_abierto' => ['re_abierto', 'en_proceso', 'cancelado'],
+            'cancelado' => ['cancelado'],
+            default => ['abierto'],
+        };
+    }
+
     // Relacion: Un ticket pertenece a una categoria
     public function categoria()
     {

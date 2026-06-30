@@ -158,10 +158,12 @@
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
                                             {{-- Editar --}}
-                                            <button wire:click="abrirEditar({{ $ticket->id }})"
-                                                class="btn btn-sm btn-outline-primary py-1 px-2">
-                                                <i class="fa-solid fa-pen"></i>
-                                            </button>
+                                            @if($ticket->estado !== 'cancelado')
+                                                <button wire:click="abrirEditar({{ $ticket->id }})"
+                                                    class="btn btn-sm btn-outline-primary py-1 px-2">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </button>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
