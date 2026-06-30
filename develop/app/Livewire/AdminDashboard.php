@@ -88,6 +88,17 @@ class AdminDashboard extends Component
             'archivo_adjunto' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,gif,pdf',
             'categoria_id' => 'required|exists:categorias,id',
             'prioridad' => 'required|in:baja,media,alta',
+        ], [
+            'titulo.required' => 'El título es obligatorio.',
+            'titulo.max' => 'El título no puede tener más de 150 caracteres.',
+            'descripcion.required' => 'La descripción es obligatoria.',
+            'archivo_adjunto.file' => 'El archivo no es válido.',
+            'archivo_adjunto.max' => 'El archivo no puede pesar más de 10MB.',
+            'archivo_adjunto.mimes' => 'Solo se permiten imágenes y PDF.',
+            'categoria_id.required' => 'Debes seleccionar una categoría.',
+            'categoria_id.exists' => 'La categoría seleccionada no es válida.',
+            'prioridad.required' => 'Debes seleccionar una prioridad.',
+            'prioridad.in' => 'La prioridad seleccionada no es válida.',
         ]);
 
         $rutaArchivo = null;
