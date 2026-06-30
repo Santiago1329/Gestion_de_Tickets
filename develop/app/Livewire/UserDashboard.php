@@ -16,6 +16,7 @@ class UserDashboard extends Component
     public $descripcion;
     public $archivo_adjunto;
     public $categoria_id;
+    public $tituloKey = 0;
 
     // Metodo para guardar un nuevo ticket
     public function guardarTicket()
@@ -48,6 +49,7 @@ class UserDashboard extends Component
 
         // Limpiar el formulario después de guardar
         $this->reset(['titulo', 'descripcion', 'archivo_adjunto', 'categoria_id']);
+        $this->tituloKey++;
 
         // Emitir un mensaje de exito
         session()->flash('mensaje', 'Tu ticket ha sido enviado exitosamente');

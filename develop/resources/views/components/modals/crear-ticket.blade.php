@@ -11,14 +11,14 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">¿Qué está fallando? *</label>
-                        <input type="text" wire:model="titulo"
+                        <input type="text" wire:model="titulo" wire:key="admin-titulo-{{ $tituloKey ?? 0 }}"
                             placeholder="Ej: No conecta la impresora"
                             class="form-control @error('titulo') is-invalid @enderror">
                         @error('titulo') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">Categoría *</label>
-                        <select wire:model="categoria_id"
+                        <select wire:model="categoria_id" wire:key="admin-categoria-{{ $tituloKey ?? 0 }}"
                             class="form-select @error('categoria_id') is-invalid @enderror">
                             <option value="">-- Selecciona una opción --</option>
                             @foreach($categorias as $cat)
@@ -29,14 +29,14 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">Descripción *</label>
-                        <textarea wire:model="descripcion" rows="3"
+                        <textarea wire:model="descripcion" rows="3" wire:key="admin-descripcion-{{ $tituloKey ?? 0 }}"
                             placeholder="Escribe los detalles aquí..."
                             class="form-control @error('descripcion') is-invalid @enderror"></textarea>
                         @error('descripcion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">Prioridad *</label>
-                        <select wire:model="prioridad"
+                        <select wire:model="prioridad" wire:key="admin-prioridad-{{ $tituloKey ?? 0 }}"
                             class="form-select @error('prioridad') is-invalid @enderror">
                             <option value="">-- Selecciona una opción --</option>
                             <option value="baja">Baja</option>
@@ -49,7 +49,7 @@
                         <label class="form-label fw-semibold small">
                             <i class="fa-solid fa-paperclip me-1 text-muted"></i> Adjuntar Evidencia (Opcional)
                         </label>
-                        <input type="file" wire:model="archivo_adjunto"
+                        <input type="file" wire:model="archivo_adjunto" wire:key="admin-archivo-{{ $tituloKey ?? 0 }}"
                             accept=".jpg,.jpeg,.png,.gif,.pdf"
                             class="form-control @error('archivo_adjunto') is-invalid @enderror">
                         <div wire:loading wire:target="archivo_adjunto" class="small text-primary mt-2">

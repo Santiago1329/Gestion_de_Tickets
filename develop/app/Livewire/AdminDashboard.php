@@ -23,6 +23,7 @@ class AdminDashboard extends Component
     public $categoria_id;
     public $prioridad;
     public $archivo_adjunto;
+    public $tituloKey = 0;
 
     // Modal ver detalle
     public $ticketDetalle = null;
@@ -105,6 +106,8 @@ class AdminDashboard extends Component
         ]);
 
         $this->reset(['titulo', 'descripcion', 'categoria_id', 'archivo_adjunto', 'prioridad']);
+        $this->tituloKey++;
+
         session()->flash('mensaje', 'Ticket creado exitosamente.');
         $this->dispatch('cerrarModalCrear');
     }

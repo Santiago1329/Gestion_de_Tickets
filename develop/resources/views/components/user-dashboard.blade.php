@@ -36,7 +36,7 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold small">Titulo del ticket *</label>
-                            <input type="text" wire:model="titulo"
+                            <input type="text" wire:model="titulo" wire:key="titulo-{{ $tituloKey ?? 0 }}"
                                 class="form-control @error('titulo') is-invalid @enderror"
                                 placeholder="Ej: No funciona la impresora"
                             >
@@ -47,7 +47,7 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold small">Categoria *</label>
-                            <select wire:model="categoria_id" 
+                            <select wire:model="categoria_id" wire:key="categoria-{{ $tituloKey ?? 0 }}"
                                 class="form-select @error('categoria_id') is-invalid @enderror"
                             >
                                 <option value="">-- Selecciona una categoria --</option>
@@ -62,10 +62,9 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold small">Descripción *</label>
-                            <textarea wire:model="descripcion"
+                            <textarea wire:model="descripcion" wire:key="descripcion-{{ $tituloKey ?? 0 }}"
                                 class="form-control @error('descripcion') is-invalid @enderror"
-                                placeholder="Escribe los detalles aqui..." rows="4">
-                            </textarea>
+                                placeholder="Escribe los detalles aqui..." rows="4"></textarea>
                             @error('descripcion') 
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -75,7 +74,7 @@
                             <label class="form-label fw-semibold small">
                                 <i class="fa-solid fa-paperclip me-1"></i> Adjuntar Evidencia (opcional)
                             </label>
-                            <input type="file" wire:model="archivo_adjunto"
+                            <input type="file" wire:model="archivo_adjunto" wire:key="archivo-{{ $tituloKey ?? 0 }}"
                                 class="form-control @error('archivo_adjunto') is-invalid @enderror"
                             >
                             <div wire:loading wire:target="archivo_adjunto" class="small text-primary mt-2">
