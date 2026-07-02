@@ -14,14 +14,6 @@
         </div>
     </div>
 
-    <!-- Mensaje de exito -->
-    @if (session()->has('mensaje'))
-        <div class="alert alert-success alert-dismissible fade show mb-4 shadow-sm">
-            <i class="fa-solid fa-circle-check me-2"></i> {{ session('mensaje') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
     <div class="row g-4">
 
         <!-- Formulario de nuevo ticket -->
