@@ -1,3 +1,154 @@
+/* ===========================
+   Variables Globales
+=========================== */
+:root {
+    --color-primary: #1f7a4a;
+    --color-primary-dark: #155c37;
+    --color-primary-light: #e8f5ee;
+    --color-primary-subtle: #d1ead9;
+
+    --color-bg: #f4f6f8;
+    --color-surface: #ffffff;
+    --color-border: #dee2e6;
+
+    --color-text: #1e2a35;
+    --color-text-muted: #6c757d;
+
+    --color-success: #198754;
+    --color-danger: #dc3545;
+    --color-warning: #ffc107;
+    --color-primary-bs: #0d6efd;
+}
+
+/* ===========================
+   Base
+=========================== */
 body {
-    background-color: #333;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ===========================
+   Navbar
+=========================== */
+.navbar-espa {
+    background-color: var(--color-surface);
+    border-bottom: 3px solid var(--color-primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.navbar-espa .navbar-brand {
+    font-weight: 700;
+    color: var(--color-primary) !important;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.navbar-espa .nav-link {
+    color: var(--color-text) !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.navbar-espa .nav-link:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary) !important;
+}
+
+.navbar-espa .nav-link.active {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary) !important;
+    font-weight: 600;
+}
+
+.navbar-espa .dropdown-menu {
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-radius: 8px;
+}
+
+.navbar-espa .dropdown-item:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+.navbar-espa .dropdown-toggle {
+    color: var(--color-text) !important;
+}
+
+/* ===========================
+   Cards
+=========================== */
+.card {
+    border: 1px solid var(--color-border) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+    background-color: var(--color-surface) !important;
+}
+
+/* ===========================
+   Botones
+=========================== */
+.btn-primary {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark) !important;
+    border-color: var(--color-primary-dark) !important;
+}
+
+.btn-outline-primary {
+    color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--color-primary) !important;
+    color: #fff !important;
+}
+
+/* ===========================
+   Tabla
+=========================== */
+.table thead th {
+    background-color: var(--color-primary) !important;
+    color: #fff !important;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none !important;
+    font-weight: 600;
+}
+
+.table tbody tr:hover {
+    background-color: var(--color-primary-light) !important;
+}
+
+/* ===========================
+   Paginacion
+=========================== */
+.pagination-admin .page-link {
+    border: 1px solid var(--color-border);
+    color: var(--color-primary);
+}
+.pagination-admin .page-item.active .page-link {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+}
+.pagination-admin .page-item.disabled .page-link {
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
+}
+.pagination-admin .page-link:hover {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
 }

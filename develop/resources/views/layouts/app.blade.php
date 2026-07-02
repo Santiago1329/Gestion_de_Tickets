@@ -13,13 +13,13 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body data-bs-theme="dark">
+    <body>
         <!-- Navbar -->
         @include('layouts.navigation')
 
         <!-- Encabezado de pagina -->
         @isset($header)
-            <div class="border-bottom py-3 px-4">
+            <div class="border-bottom py-3 px-4" style="background-color:var(--color-surface);">
                 {{ $header }}
             </div>
         @endisset
