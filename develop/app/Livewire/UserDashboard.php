@@ -61,7 +61,7 @@ class UserDashboard extends Component
         $this->tituloKey++;
 
         // Emitir un mensaje de exito
-        session()->flash('mensaje', 'Tu ticket ha sido enviado exitosamente');
+        $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido enviado exitosamente');
     }
 
     // Metodo para cancelar un ticket, solo si el ticket esta en estado 'abierto' o 'en_proceso'
@@ -70,7 +70,7 @@ class UserDashboard extends Component
         $ticket = Ticket::where('id', $id)->where('user_id', auth()->id())->first();
         if ($ticket && in_array($ticket->estado, ['abierto', 'en_proceso'])) {
             $ticket->update(['estado' => 'cancelado']);
-            session()->flash('mensaje', 'Tu ticket ha sido cancelado exitosamente');
+            $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido cancelado exitosamente');
         }
     }
 
@@ -80,7 +80,7 @@ class UserDashboard extends Component
         $ticket = Ticket::where('id', $id)->where('user_id', auth()->id())->first();
         if ($ticket && $ticket->estado === 'resuelto') {
             $ticket->update(['estado' => 're_abierto']);
-            session()->flash('mensaje', 'Tu ticket ha sido reabierto exitosamente');
+            $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido reabierto exitosamente');
         }
     }
 

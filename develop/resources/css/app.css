@@ -152,3 +152,10 @@ body {
     border-color: var(--color-primary);
     color: var(--color-primary);
 }
+
+/* ===========================
+   Paginacion
+=========================== */
+#toastExito {
+    background-color: var(--color-primary);
+}

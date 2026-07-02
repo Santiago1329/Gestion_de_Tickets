@@ -75,7 +75,7 @@ class AdminDashboard extends Component
         ]);
 
         $this->reset(['ticketEditarId', 'editarEstado', 'editarPrioridad', 'estadosDisponibles']);
-        session()->flash('mensaje', 'El ticket ha sido actualizado');
+        $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'El ticket ha sido actualizado');
         $this->dispatch('cerrarModalEditar');
     }
 
@@ -119,7 +119,7 @@ class AdminDashboard extends Component
         $this->reset(['titulo', 'descripcion', 'categoria_id', 'archivo_adjunto', 'prioridad']);
         $this->tituloKey++;
 
-        session()->flash('mensaje', 'Ticket creado exitosamente.');
+        $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Ticket creado exitosamente.');
         $this->dispatch('cerrarModalCrear');
     }
 
