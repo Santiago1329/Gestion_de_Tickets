@@ -137,14 +137,13 @@
 
                                             <!-- Estado Derecha -->
                                             <div class="text-end d-flex flex-column">
-                                                <span class="badge text-uppercase
-                                                    @if ($ticket->estado == 'abierto') bg-secondary-subtle text-secondary border border-secondary
-                                                    @elseif ($ticket->estado == 'en_proceso') bg-primary-subtle text-primary border border-primary
-                                                    @elseif ($ticket->estado == 'resuelto') bg-success-subtle text-success border border-success
-                                                    @elseif ($ticket->estado == 'cancelado') bg-danger-subtle text-danger border border-danger
-                                                    @elseif ($ticket->estado == 're_abierto') bg-warning-subtle text-warning border border-warning
-                                                    @endif
-                                                ">
+                                                <span class="badge-estado
+                                                    @if($ticket->estado == 'abierto') badge-abierto
+                                                    @elseif($ticket->estado == 'en_proceso') badge-en-proceso
+                                                    @elseif($ticket->estado == 'resuelto') badge-resuelto
+                                                    @elseif($ticket->estado == 'cancelado') badge-cancelado
+                                                    @elseif($ticket->estado == 're_abierto') badge-re-abierto
+                                                    @endif">
                                                     {{ str_replace('_', ' ', $ticket->estado) }}
                                                 </span>
                                             </div>

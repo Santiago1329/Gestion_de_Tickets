@@ -76,7 +76,7 @@
                     </select>
                 </div>
                 <div class="col-12 col-md-6 d-flex justify-content-end">
-                    <button class="btn btn-danger px-3 fw-bold" wire:click="abrirModalCrear" data-bs-target="#modalCrearTicket">
+                    <button class="btn btn-danger px-3 fw-bold" wire:loading.attr="disabled" wire:click="abrirModalCrear" data-bs-target="#modalCrearTicket">
                         <i class="fa-solid fa-plus me-1"></i> Nuevo Ticket
                     </button>
                 </div>
@@ -120,22 +120,21 @@
                                     <td class="small">{{ $ticket->categoria->nombre ?? '-' }}</td>
 
                                     <td>
-                                        <span class="badge text-uppercase
-                                            @if ($ticket->estado == 'abierto') bg-secondary-subtle text-secondary border border-secondary
-                                            @elseif ($ticket->estado == 'en_proceso') bg-primary-subtle text-primary border border-primary
-                                            @elseif ($ticket->estado == 'resuelto') bg-success-subtle text-success border border-success
-                                            @elseif ($ticket->estado == 'cancelado') bg-danger-subtle text-danger border border-danger
-                                            @elseif ($ticket->estado == 're_abierto') bg-warning-subtle text-warning border border-warning
-                                            @endif
-                                        ">
+                                        <span class="badge-estado
+                                            @if($ticket->estado == 'abierto') badge-abierto
+                                            @elseif($ticket->estado == 'en_proceso') badge-en-proceso
+                                            @elseif($ticket->estado == 'resuelto') badge-resuelto
+                                            @elseif($ticket->estado == 'cancelado') badge-cancelado
+                                            @elseif($ticket->estado == 're_abierto') badge-re-abierto
+                                            @endif">
                                             {{ str_replace('_', ' ', $ticket->estado) }}
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="badge text-uppercase
-                                            @if($ticket->prioridad == 'alta') bg-danger-subtle text-danger border border-danger
-                                            @elseif($ticket->prioridad == 'media') bg-warning-subtle text-warning border border-warning
-                                            @elseif($ticket->prioridad == 'baja') bg-success-subtle text-success border border-success
+                                        <span class="badge-estado
+                                            @if($ticket->prioridad == 'alta') badge-alta
+                                            @elseif($ticket->prioridad == 'media') badge-media
+                                            @elseif($ticket->prioridad == 'baja') badge-baja
                                             @endif">
                                             {{ $ticket->prioridad }}
                                         </span>

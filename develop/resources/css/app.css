@@ -152,10 +152,27 @@ body {
     border-color: var(--color-primary);
     color: var(--color-primary);
 }
-
-/* ===========================
-   Paginacion
-=========================== */
 #toastExito {
     background-color: var(--color-primary);
 }
+
+/* Badges de estado */
+.badge-estado {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    text-transform: Capitalize;
+}
+
+.badge-abierto { background-color: #e9ecef; color: #495057; }
+.badge-en-proceso { background-color: #dbeafe; color: #1d4ed8; }
+.badge-resuelto { background-color: #dcfce7; color: #15803d; }
+.badge-cancelado { background-color: #fee2e2; color: #b91c1c; }
+.badge-re-abierto { background-color: #fef9c3; color: #a16207; }
+
+/* Badges de prioridad */
+.badge-alta { background-color: #fee2e2; color: #b91c1c; }
+.badge-media { background-color: #fef9c3; color: #a16207; }
+.badge-baja { background-color: #dcfce7; color: #15803d; }

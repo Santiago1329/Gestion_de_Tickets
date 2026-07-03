@@ -63,24 +63,24 @@
                         </div>
                         <div class="col-6">
                             <div class="text-muted small text-uppercase">Estado</div>
-                            <span class="badge text-uppercase mt-1
-                                @if($ticketDetalle->estado == 'abierto') bg-secondary-subtle text-secondary border border-secondary
-                                @elseif($ticketDetalle->estado == 'en_proceso') bg-primary-subtle text-primary border border-primary
-                                @elseif($ticketDetalle->estado == 'resuelto') bg-success-subtle text-success border border-success
-                                @elseif($ticketDetalle->estado == 'cancelado') bg-danger-subtle text-danger border border-danger
-                                @elseif($ticketDetalle->estado == 're_abierto') bg-warning-subtle text-warning border border-warning
+                            <span class="badge-estado
+                                @if($ticket->estado == 'abierto') badge-abierto
+                                @elseif($ticket->estado == 'en_proceso') badge-en-proceso
+                                @elseif($ticket->estado == 'resuelto') badge-resuelto
+                                @elseif($ticket->estado == 'cancelado') badge-cancelado
+                                @elseif($ticket->estado == 're_abierto') badge-re-abierto
                                 @endif">
-                                {{ str_replace('_', ' ', $ticketDetalle->estado) }}
+                                {{ str_replace('_', ' ', $ticket->estado) }}
                             </span>
                         </div>
                         <div class="col-6">
                             <div class="text-muted small text-uppercase">Prioridad</div>
-                            <span class="badge text-uppercase mt-1
-                                @if($ticketDetalle->prioridad == 'alta') bg-danger-subtle text-danger border border-danger
-                                @elseif($ticketDetalle->prioridad == 'media') bg-warning-subtle text-warning border border-warning
-                                @elseif($ticketDetalle->prioridad == 'baja') bg-success-subtle text-success border border-success
+                            <span class="badge-estado
+                                @if($ticket->prioridad == 'alta') badge-alta
+                                @elseif($ticket->prioridad == 'media') badge-media
+                                @elseif($ticket->prioridad == 'baja') badge-baja
                                 @endif">
-                                {{ $ticketDetalle->prioridad }}
+                                {{ $ticket->prioridad }}
                             </span>
                         </div>
                     </div>
