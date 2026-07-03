@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('descripcion');
-            $table->string('archivo_adjunto')->nullable(); 
+            $table->string('archivo_adjunto')->nullable();
+            $table->string('telefono')->nullable();
             $table->enum('estado', ['abierto', 'en_proceso', 'resuelto', 'cancelado', 're_abierto'])->default('abierto');
             $table->enum('prioridad', ['baja', 'media', 'alta'])->default('media');
             // LLaves foraneas para relacionar con categorias y usuarios
