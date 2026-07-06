@@ -16,7 +16,13 @@
                         </div>
                         <div class="col-6">
                             <div class="text-muted small text-uppercase">Fecha</div>
-                            <div class="fw-semibold">{{ $ticketDetalle->created_at->format('d/m/Y h:i A') }}</div>
+                            <div class="fw-semibold">
+                                @if($ticketDetalle->created_at)
+                                    {{ $ticketDetalle->created_at->format('d/m/Y h:i A') }}
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </div>
                         </div>
                         <div class="col-6">
                             <div class="text-muted small text-uppercase">Usuario</div>

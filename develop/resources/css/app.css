@@ -91,6 +91,52 @@ body {
 }
 
 /* ===========================
+   Header del panel
+=========================== */
+.header-panel {
+    border-bottom: 3px solid var(--color-primary) !important;
+}
+
+.badge-role {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+/* ===========================
+   Tarjetas KPI (resumen)
+=========================== */
+.kpi-card .card-body {
+    padding: 16px 20px;
+}
+
+.kpi-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.kpi-icon-primary { background-color: var(--color-primary-light); color: var(--color-primary); }
+.kpi-icon-neutral { background-color: #f1f2f3; color: #495057; }
+.kpi-icon-info    { background-color: #dbeafe; color: #1d4ed8; }
+.kpi-icon-success { background-color: var(--color-primary-subtle); color: var(--color-primary-dark); }
+
+.kpi-value-primary { color: var(--color-text); }
+.kpi-value-neutral { color: #495057; }
+.kpi-value-info    { color: #1d4ed8; }
+.kpi-value-success { color: var(--color-primary-dark); }
+
+/* ===========================
    Botones
 =========================== */
 .btn-primary {
@@ -118,8 +164,8 @@ body {
    Tabla
 =========================== */
 .table thead th {
-    background-color: var(--color-primary) !important;
-    color: #fff !important;
+    background-color: var(--color-primary-light) !important;
+    color: var(--color-primary-dark) !important;
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;

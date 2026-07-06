@@ -23,10 +23,7 @@
                             <i class="fa-solid fa-user" style="font-size:12px;color:var(--color-primary);"></i>
                         </div>
                         <div class="d-flex flex-column lh-sm">
-                            <span style="font-size:0.85rem;">{{ Auth::user()->name }}</span>
-                            <small class="text-muted" style="font-size: 11px;">
-                                {{ Auth::user()->area ?? 'Sin área' }}
-                            </small>
+                            <span>{{ Auth::user()->name }}</span>
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">

@@ -1,47 +1,73 @@
 <div class="container-fluid">
 
     <!-- Header -->
-    <div class="card shadow-sm border-0 border-start border-danger border-5 mb-4">
-        <div class="card-body d-flex justify-content-between align-items-center">
-            <div>
-                <h3 class="mb-1 fw-bold">Panel de Administración</h3>
-                <p class="text-muted small mb-0">Gestiona todos los tickets de soporte</p>
-            </div>
-            <div class="text-end d-none d-sm-block">
-                <span class="text-uppercase small text-muted">Rol</span>
-                <h6 class="fw-bold text-danger text-uppercase mb-0">{{ auth()->user()->rol }}</h6>
-            </div>
+    <div class="card-body d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1 fw-bold">Panel de Administración</h3>
+            <p class="text-muted small mb-0">Gestiona todos los tickets de soporte</p>
         </div>
+        <span class="badge-role d-none d-sm-inline-block">{{ auth()->user()->rol }}</span>
     </div>
 
     <!-- Tarjetas Resumen -->
     <div class="row g-3 mb-4">
 
         <div class="col-6 col-md-3">
-            <div class="card border-0 border-top border-danger border-4 shadow-sm text-center py-3">
-                <h2 class="fw-bold text-danger mb-0">{{ $totalTickets }}</h2>
-                <p class="text-muted small text-uppercase">Total de Tickets</p>
+            <div class="card kpi-card border-0 shadow-sm">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <div class="kpi-icon kpi-icon-primary">
+                        <i class="fa-solid fa-ticket"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0 kpi-value-primary">{{ $totalTickets }}</h4>
+                        <p class="text-muted small mb-0">Total de Tickets</p>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="col-6 col-md-3">
-            <div class="card border-0 border-top border-warning border-4 shadow-sm text-center py-3">
-                <h2 class="fw-bold text-warning mb-0">{{ $totalAbiertos }}</h2>
-                <p class="text-muted small text-uppercase">Tickets Abiertos</p>
+            <div class="card kpi-card border-0 shadow-sm">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <div class="kpi-icon kpi-icon-neutral">
+                        <i class="fa-solid fa-folder-open"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0 kpi-value-neutral">{{ $totalAbiertos }}</h4>
+                        <p class="text-muted small mb-0">Tickets Abiertos</p>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="col-6 col-md-3">
-            <div class="card border-0 border-top border-primary border-4 shadow-sm text-center py-3">
-                <h2 class="fw-bold text-primary mb-0">{{ $totalEnProceso }}</h2>
-                <p class="text-muted small text-uppercase">Tickets en Proceso</p>
+            <div class="card kpi-card border-0 shadow-sm">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <div class="kpi-icon kpi-icon-info">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0 kpi-value-info">{{ $totalEnProceso }}</h4>
+                        <p class="text-muted small mb-0">Tickets en Proceso</p>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="col-6 col-md-3">
-            <div class="card border-0 border-top border-success border-4 shadow-sm text-center py-3">
-                <h2 class="fw-bold text-success mb-0">{{ $totalResueltos }}</h2>
-                <p class="text-muted small text-uppercase">Tickets Resueltos</p>
+            <div class="card kpi-card border-0 shadow-sm">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <div class="kpi-icon kpi-icon-success">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0 kpi-value-success">{{ $totalResueltos }}</h4>
+                        <p class="text-muted small mb-0">Tickets Resueltos</p>
+                    </div>
+                </div>
             </div>
         </div>
-        
+
     </div>
 
     <!-- Filtros -->
@@ -76,16 +102,14 @@
                     </select>
                 </div>
                 <div class="col-12 col-md-6 d-flex justify-content-end">
-                    <button class="btn btn-danger px-3 fw-bold" wire:loading.attr="disabled" wire:click="abrirModalCrear" data-bs-target="#modalCrearTicket">
+                    <button class="btn btn-primary px-3 fw-bold" wire:loading.attr="disabled" wire:click="abrirModalCrear" data-bs-target="#modalCrearTicket">
                         <i class="fa-solid fa-plus me-1"></i> Nuevo Ticket
                     </button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Tabla de Tickets -->
-    <div class="card shadow-sm border-0">
+        <!-- Tabla de Tickets -->
         <div class="card-body p-0">
             @if ($tickets->isEmpty())
                 <div class="text-center py-5">
@@ -93,10 +117,10 @@
                     <p class="text-muted mb-0">No hay tickets para mostrar</p>
                 </div>
             @else
-                <div class="table-responsive rounded">
+                <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                         <thead>
-                            <tr>
+                            <tr class="border-bottom border-top">
                                 <th class="ps-3">Codigo</th>
                                 <th>Usuario</th>
                                 <th>Titulo</th>
@@ -114,7 +138,6 @@
                                     <td class="ps-3 font-monospace text-muted">TIC-{{ str_pad($ticket->id, 4, '0', STR_PAD_LEFT) }}</td>
                                     <td>
                                         <div class="fw-semibold small">{{ $ticket->user->name }}</div>
-                                        <div class="text-muted" style="font-size: 11px;">{{ $ticket->user->area ?? 'Sin área' }}</div>
                                     </td>
                                     <td class="fw-semibold small">{{ $ticket->titulo }}</td>
                                     <td class="small">{{ $ticket->categoria->nombre ?? '-' }}</td>
@@ -139,7 +162,13 @@
                                             {{ $ticket->prioridad }}
                                         </span>
                                     </td>
-                                    <td class="small text-muted">{{ $ticket->created_at->format('d/m/Y h:i A') }}</td>
+                                    <td class="small text-muted">
+                                        @if($ticket->created_at)
+                                            {{ $ticket->created_at->format('d/m/Y h:i A') }}
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
                                     <td class="text-end pe-3">
                                         <div class="d-flex justify-content-end gap-1">
                                             {{-- Ver detalle --}}
