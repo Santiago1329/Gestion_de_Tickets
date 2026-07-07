@@ -12,13 +12,6 @@
             </div>
         </div>
 
-        <!-- Cambiar contraseña -->
-        <div class="card shadow-sm mb-4">
-            <div class="p-4 card-body">
-                @include('profile.partials.update-password-form')
-            </div>
-        </div>
-
         <!-- Eliminar cuenta -->
         <div class="card shadow-sm border-danger mb-4">
             <div class="p-4 card-body">
