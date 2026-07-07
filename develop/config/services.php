@@ -39,8 +39,7 @@ return [
         'client_id' => env('MICROSOFT_CLIENT_ID'),
         'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
         'tenant' => env('MICROSOFT_TENANT_ID'),
-        'redirect' => rtrim(env('MICROSOFT_REDIRECT_URI', env('APP_URL') . '/login/microsoft/callback'), '/'),
-        'redirect_alt' => rtrim(env('MICROSOFT_REDIRECT_URI_ALT', ''), '/'),
+        'redirect' => rtrim(env('MICROSOFT_REDIRECT_URI'), '/'),
     ]
 
 ];

@@ -11,29 +11,13 @@ use Laravel\Socialite\Facades\Socialite;
 
 class MicrosoftController extends Controller
 {
-    protected function setMicrosoftRedirect(): void
-    {
-        $redirect = config('services.microsoft.redirect');
-        $redirectAlt = config('services.microsoft.redirect_alt');
-
-        if ($redirectAlt && request()->getHost() === '127.0.0.1') {
-            $redirect = $redirectAlt;
-        }
-
-        config(['services.microsoft.redirect' => rtrim($redirect, '/')]);
-    }
-
     public function redirect()
     {
-        $this->setMicrosoftRedirect();
-
         return Socialite::driver('microsoft')->redirect();
     }
 
     public function callback()
     {
-        $this->setMicrosoftRedirect();
-
         try {
             $microsoftUser = Socialite::driver('microsoft')->user();
         } catch (\Throwable $e) {
