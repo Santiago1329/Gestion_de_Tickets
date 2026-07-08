@@ -28,14 +28,6 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                                <i class="fa-solid fa-user me-2"></i> Perfil
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button class="dropdown-item text-danger" type="submit">
