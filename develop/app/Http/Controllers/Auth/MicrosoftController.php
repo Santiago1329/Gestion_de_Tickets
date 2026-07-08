@@ -13,7 +13,9 @@ class MicrosoftController extends Controller
 {
     public function redirect()
     {
-        return Socialite::driver('microsoft')->redirect();
+        return Socialite::driver('microsoft')
+            ->with(['prompt' => 'login'])
+            ->redirect();
     }
 
     public function callback()
