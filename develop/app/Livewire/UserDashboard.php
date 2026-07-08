@@ -4,12 +4,13 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use App\Models\Ticket;
 use App\Models\Categoria;
 
 class UserDashboard extends Component
 {
-    use WithFileUploads; // Trait para manejo de archivos
+    use WithFileUploads, WithPagination; // Traits
 
     // Propiedades para el formulario de creación de tickets
     public $titulo;
@@ -92,7 +93,7 @@ class UserDashboard extends Component
             'misTickets' => Ticket::where('user_id', auth()->id())
             ->with('categoria')
             ->latest()
-            ->get()
+            ->paginate(10)->withQueryString()
         ]);
     }
 }

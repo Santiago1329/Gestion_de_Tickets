@@ -210,6 +210,7 @@ body {
     border-radius: 20px;
     letter-spacing: 0.3px;
     text-transform: Capitalize;
+    white-space: nowrap;
 }
 
 .badge-abierto { background-color: #e9ecef; color: #495057; }

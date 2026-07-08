@@ -74,22 +74,22 @@
 
     <style>
         .pagination-admin .page-link {
-            border: 1px solid var(--bs-border-color);
-            color: var(--bs-danger);
+            border: 1px solid var(--color-primary-subtle);
+            color: var(--color-primary);
         }
         .pagination-admin .page-item.active .page-link {
-            background-color: var(--bs-danger);
-            border-color: var(--bs-danger);
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
             color: #fff;
         }
         .pagination-admin .page-item.disabled .page-link {
-            color: var(--bs-secondary-color);
-            border-color: var(--bs-border-color);
+            color: var(--color-text-muted);
+            border-color: var(--color-primary-light);
         }
         .pagination-admin .page-link:hover {
-            background-color: var(--bs-danger-bg-subtle);
-            border-color: var(--bs-danger);
-            color: var(--bs-danger);
+            background-color: #dcfce7;
+            border-color: var(--color-primary);
+            color: var(--color-primary);
         }
     </style>
 @endif
