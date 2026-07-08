@@ -23,6 +23,7 @@ class AdminDashboard extends Component
     public $categoria_id;
     public $prioridad;
     public $archivo_adjunto;
+    public $telefono;
     public $tituloKey = 0;
 
     // Modal ver detalle
@@ -54,7 +55,7 @@ class AdminDashboard extends Component
 
     public function abrirModalCrear()
     {
-        $this->reset(['titulo', 'descripcion', 'categoria_id', 'archivo_adjunto', 'prioridad', 'ticketEditarId', 'editarEstado', 'editarPrioridad']);
+        $this->reset(['titulo', 'descripcion', 'categoria_id', 'archivo_adjunto', 'prioridad', 'telefono', 'ticketEditarId', 'editarEstado', 'editarPrioridad']);
         $this->dispatch('abrirModalCrearTicket');
     }
 
@@ -88,6 +89,7 @@ class AdminDashboard extends Component
             'archivo_adjunto' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,gif,pdf',
             'categoria_id' => 'required|exists:categorias,id',
             'prioridad' => 'required|in:baja,media,alta',
+            'telefono' => 'nullable|string|max:20',
         ], [
             'titulo.required' => 'El título es obligatorio.',
             'titulo.max' => 'El título no puede tener más de 150 caracteres.',
@@ -99,6 +101,7 @@ class AdminDashboard extends Component
             'categoria_id.exists' => 'La categoría seleccionada no es válida.',
             'prioridad.required' => 'Debes seleccionar una prioridad.',
             'prioridad.in' => 'La prioridad seleccionada no es válida.',
+            'telefono.max' => 'El teléfono no puede tener más de 20 caracteres.',
         ]);
 
         $rutaArchivo = null;
@@ -112,11 +115,12 @@ class AdminDashboard extends Component
             'archivo_adjunto' => $rutaArchivo,
             'prioridad' => $this->prioridad,
             'categoria_id' => $this->categoria_id,
+            'telefono' => $this->telefono,
             'user_id' => auth()->id(),
             'estado' => 'abierto',
         ]);
 
-        $this->reset(['titulo', 'descripcion', 'categoria_id', 'archivo_adjunto', 'prioridad']);
+        $this->reset(['titulo', 'descripcion', 'categoria_id', 'archivo_adjunto', 'prioridad', 'telefono']);
         $this->tituloKey++;
 
         $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Ticket creado exitosamente.');

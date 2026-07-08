@@ -14,6 +14,7 @@ class Ticket extends Model
         'titulo',
         'descripcion',
         'archivo_adjunto',
+        'telefono',
         'estado',
         'prioridad',
         'categoria_id',

@@ -54,19 +54,19 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-semibold small">Titulo del ticket *</label>
-                            <input type="text" wire:model="titulo" wire:key="titulo-{{ $tituloKey ?? 0 }}"
-                                class="form-control @error('titulo') is-invalid @enderror"
-                                placeholder="Ej: No funciona la impresora"
+                            <label class="form-label fw-semibold small">Telefono (opcional)</label>
+                            <input type="text" wire:model="telefono" wire:key="telefono-{{ $tituloKey ?? 0 }}"
+                                class="form-control @error('telefono') is-invalid @enderror"
+                                placeholder="Ej: 3001234567"
                             >
-                            @error('titulo')
+                            @error('telefono')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label fw-semibold small">Adjuntar Evidencia (opcional)</label>
-                            <input type="file" wire:model="archivo_adjunto" wire:key="archivo-{{ $tituloKey ?? 0 }}"
+                            <input type="file" wire:model="archivo_adjunto" wire:key="archivo-{{ $telefonoKey ?? 0 }}"
                                 class="form-control @error('archivo_adjunto') is-invalid @enderror"
                             >
                             <div wire:loading wire:target="archivo_adjunto" class="small text-success mt-2">

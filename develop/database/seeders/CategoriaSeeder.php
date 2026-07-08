@@ -16,7 +16,7 @@ class CategoriaSeeder extends Seeder
         $categorias = [
             ['nombre' => 'Computadores(Funcionamiento general - Mantenimiento)'],
             ['nombre' => 'Servidores - NAS - Switches (Dispositivos de red)'],
-            ['nombre' => 'Disposyivos de reconocimiento facial (Control de acceso)'],
+            ['nombre' => 'Dispositivos de reconocimiento facial (Control de acceso)'],
             ['nombre' => 'Impresoras - Escáneres'],
             ['nombre' => 'Grupos de tabajo - Carpetas ESPA'],
             ['nombre' => 'Aplicaciones - Programas (Local)'],

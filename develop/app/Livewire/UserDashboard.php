@@ -17,6 +17,7 @@ class UserDashboard extends Component
     public $descripcion;
     public $archivo_adjunto;
     public $categoria_id;
+    public $telefono;
     public $tituloKey = 0;
 
     // Metodo para guardar un nuevo ticket
@@ -28,6 +29,7 @@ class UserDashboard extends Component
             'descripcion' => 'required',
             'archivo_adjunto' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,gif,pdf',
             'categoria_id' => 'required|exists:categorias,id',
+            'telefono' => 'nullable|string|max:20',
         ], [
             'titulo.required' => 'El título es obligatorio.',
             'titulo.max' => 'El título no puede tener más de 150 caracteres.',
@@ -37,6 +39,7 @@ class UserDashboard extends Component
             'archivo_adjunto.mimes' => 'Solo se permiten imágenes y PDF.',
             'categoria_id.required' => 'Debes seleccionar una categoría.',
             'categoria_id.exists' => 'La categoría seleccionada no es válida.',
+            'telefono.max' => 'El teléfono no puede tener más de 20 caracteres.',
         ]);
 
         $rutaArchivo = null;
@@ -52,13 +55,14 @@ class UserDashboard extends Component
             'descripcion' => $this->descripcion,
             'archivo_adjunto' => $rutaArchivo,
             'categoria_id' => $this->categoria_id,
+            'telefono' => $this->telefono,
             'user_id' => auth()->id(),
             'estado' => 'abierto', // Estado inicial del ticket
             'prioridad' => 'media', // Prioridad por defecto
         ]);
 
         // Limpiar el formulario después de guardar
-        $this->reset(['titulo', 'descripcion', 'archivo_adjunto', 'categoria_id']);
+        $this->reset(['titulo', 'descripcion', 'archivo_adjunto', 'categoria_id', 'telefono']);
         $this->tituloKey++;
 
         // Emitir un mensaje de exito

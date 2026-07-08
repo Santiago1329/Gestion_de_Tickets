@@ -53,6 +53,15 @@
                         @error('descripcion') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Teléfono (Opcional)</label>
+                        <input type="text" wire:model="telefono"
+                            wire:key="admin-telefono-{{ $tituloKey ?? 0 }}"
+                            placeholder="Ej: 3001234567"
+                            class="form-control form-control-sm @error('telefono') is-invalid @enderror">
+                        @error('telefono') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+                    </div>
+
                     <div class="mb-0">
                         <label class="form-label fw-semibold small">Adjuntar Evidencia (Opcional)</label>
                         <input type="file" wire:model="archivo_adjunto" 

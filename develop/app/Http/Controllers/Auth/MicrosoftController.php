@@ -37,7 +37,7 @@ class MicrosoftController extends Controller
                 'name' => $microsoftUser->getName() ?? $microsoftUser->getEmail(),
                 'email' => $microsoftUser->getEmail(),
                 'password' => Hash::make(Str::random(24)),
-                'rol' => 'cliente',
+                'rol' => 'usuario',
                 'email_verified_at' => now(),
             ]);
         }
