@@ -35,11 +35,21 @@ class AdminDashboard extends Component
     public $editarPrioridad = "";
     public $estadosDisponibles = [];
 
+    // Modal Chat
+    public $ticketChat = null;
+
     // Abrir modal detalle
     public function verDetalle($id)
     {
         $this->ticketDetalle = Ticket::with(['categoria', 'user'])->findOrFail($id);
         $this->dispatch('abrirModalDetalle');
+    }
+
+    // Abrir modal de chat
+    public function abrirChat($id)
+    {
+        $this->ticketChat = Ticket::findOrFail($id);
+        $this->dispatch('abrirModalChat');
     }
 
     // Abrir modal editar
