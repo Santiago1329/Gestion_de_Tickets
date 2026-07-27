@@ -143,7 +143,7 @@
                                                         </a>
                                                     @endif
 
-                                                    <div class="dropdown">
+                                                    <div class="dropdown dropdown-acciones">
                                                         <button class="btn btn-sm btn-outline-secondary py-1 px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                                         </button>
@@ -152,7 +152,7 @@
                                                                 <li>
                                                                     <button wire:click="cancelarTicket({{ $ticket->id }})"
                                                                         wire:confirm="¿Seguro que deseas cancelar este reporte?"
-                                                                        class="dropdown-item text-danger">
+                                                                        class="dropdown-item item-cancelar">
                                                                         <i class="fa-solid fa-ban me-2"></i> Cancelar
                                                                     </button>
                                                                 </li>
@@ -161,14 +161,14 @@
                                                             @if ($ticket->estado == 'resuelto')
                                                                 <li>
                                                                     <button wire:click="reabrirTicket({{ $ticket->id }})"
-                                                                        class="dropdown-item text-warning">
+                                                                        class="dropdown-item item-reabrir">
                                                                         <i class="fa-solid fa-rotate-left me-2"></i> Reabrir
                                                                     </button>
                                                                 </li>
                                                             @endif
 
                                                             <li>
-                                                                <button wire:click="abrirChat({{ $ticket->id }})" class="dropdown-item">
+                                                                <button wire:click="abrirChat({{ $ticket->id }})" class="dropdown-item item-chat">
                                                                     <i class="fa-solid fa-comments me-2"></i> Chat
                                                                 </button>
                                                             </li>
