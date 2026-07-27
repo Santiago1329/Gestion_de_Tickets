@@ -20,6 +20,9 @@ class UserDashboard extends Component
     public $telefono;
     public $tituloKey = 0;
 
+    // Modal chat
+    public $ticketChat = null;
+
     // Metodo para guardar un nuevo ticket
     public function guardarTicket()
     {
@@ -67,6 +70,13 @@ class UserDashboard extends Component
 
         // Emitir un mensaje de exito
         $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido enviado exitosamente');
+    }
+
+    // Abrir modal de chat (solo si el ticket es del usuario autenticado)
+    public function abrirChat($id)
+    {
+        $this->ticketChat = Ticket::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+        $this->dispatch('abrirModalChat');
     }
 
     // Metodo para cancelar un ticket, solo si el ticket esta en estado 'abierto' o 'en_proceso'

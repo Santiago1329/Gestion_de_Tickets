@@ -143,20 +143,37 @@
                                                         </a>
                                                     @endif
 
-                                                    @if (in_array($ticket->estado, ['abierto', 'en_proceso']))
-                                                        <button wire:click="cancelarTicket({{ $ticket->id }})"
-                                                            wire:confirm="¿Seguro que deseas cancelar este reporte?"
-                                                            class="btn btn-sm btn-outline-danger py-1 px-2">
-                                                            <i class="fa-solid fa-ban"></i>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-sm btn-outline-secondary py-1 px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="fa-solid fa-ellipsis-vertical"></i>
                                                         </button>
-                                                    @endif
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            @if (in_array($ticket->estado, ['abierto', 'en_proceso']))
+                                                                <li>
+                                                                    <button wire:click="cancelarTicket({{ $ticket->id }})"
+                                                                        wire:confirm="¿Seguro que deseas cancelar este reporte?"
+                                                                        class="dropdown-item text-danger">
+                                                                        <i class="fa-solid fa-ban me-2"></i> Cancelar
+                                                                    </button>
+                                                                </li>
+                                                            @endif
 
-                                                    @if ($ticket->estado == 'resuelto')
-                                                        <button wire:click="reabrirTicket({{ $ticket->id }})"
-                                                            class="btn btn-sm btn-outline-warning py-1 px-2">
-                                                            <i class="fa-solid fa-rotate-left"></i>
-                                                        </button>
-                                                    @endif
+                                                            @if ($ticket->estado == 'resuelto')
+                                                                <li>
+                                                                    <button wire:click="reabrirTicket({{ $ticket->id }})"
+                                                                        class="dropdown-item text-warning">
+                                                                        <i class="fa-solid fa-rotate-left me-2"></i> Reabrir
+                                                                    </button>
+                                                                </li>
+                                                            @endif
+
+                                                            <li>
+                                                                <button wire:click="abrirChat({{ $ticket->id }})" class="dropdown-item">
+                                                                    <i class="fa-solid fa-comments me-2"></i> Chat
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -173,5 +190,14 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Chat -->
+    @include('components.modals.chat-ticket')
+
+    <script>
+        window.addEventListener('abrirModalChat', () => {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalChat')).show();
+        });
+    </script>
 
 </div>

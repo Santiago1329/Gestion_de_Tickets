@@ -57,7 +57,7 @@ class TicketChat extends Component
 
     public function render()
     {
-        return view('livewire.ticket-chat', [
+        return view('components.ticket-chat', [
             'mensajes' => $this->ticket->mensajes()->with('user')->orderBy('created_at')->get(),
         ]);
     }

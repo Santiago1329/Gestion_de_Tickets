@@ -171,6 +171,14 @@
                                     </td>
                                     <td class="text-end pe-3">
                                         <div class="d-flex justify-content-end gap-1">
+                                            {{-- Chat --}}
+                                            <button wire:click="abrirChat({{ $ticket->id }})"
+                                                wire:loading.attr="disabled"
+                                                wire:target="abrirChat"
+                                                class="btn btn-sm btn-outline-success py-1 px-2">
+                                                <i class="fa-solid fa-comments"></i>
+                                            </button>
+
                                             {{-- Ver detalle --}}
                                             <button wire:click="verDetalle({{ $ticket->id }})"
                                                 wire:loading.attr="disabled"
@@ -212,6 +220,9 @@
     <!-- Modal Crear Ticket -->
     @include('components.modals.crear-ticket')
 
+    <!-- Modal Chat -->
+    @include('components.modals.chat-ticket')
+
     <!-- Cerrar modales al terminar una accion -->
     <script>
         window.addEventListener('abrirModalEditar', () => {
@@ -228,6 +239,9 @@
         });
         window.addEventListener('abrirModalDetalle', () => {
             bootstrap.Modal.getOrCreateInstance(document.getElementById('modalDetalle')).show();
+        });
+        window.addEventListener('abrirModalChat', () => {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalChat')).show();
         });
     </script>
 </div>
