@@ -45,4 +45,10 @@ class Ticket extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Relacio: Un ticket tiene muchos mensajes (chat en vivo)
+    public function mensajes()
+    {
+        return $this->hasMany(Mensaje::class);
+    }
 }
