@@ -12,23 +12,31 @@ class NotificacionesDropdown extends Component
     public function mount()
     {
         $this->authId = auth()->id();
+        $this->actualizarContadorTitulo();
     }
 
-    // Escucha CUALQUIER notificación enviada al usuario autenticado
     #[On('echo-notification:App.Models.User.{authId}')]
     public function notificacionRecibida($notification): void
     {
         $this->dispatch('nueva-notificacion', mensaje: $notification['mensaje'] ?? '');
+        $this->actualizarContadorTitulo();
     }
 
     public function marcarLeida($id)
     {
         auth()->user()->notifications()->where('id', $id)->first()?->markAsRead();
+        $this->actualizarContadorTitulo();
     }
 
     public function marcarTodasLeidas()
     {
         auth()->user()->unreadNotifications->markAsRead();
+        $this->actualizarContadorTitulo();
+    }
+
+    private function actualizarContadorTitulo(): void
+    {
+        $this->dispatch('notif-contador-actualizado', total: auth()->user()->unreadNotifications()->count());
     }
 
     public function render()

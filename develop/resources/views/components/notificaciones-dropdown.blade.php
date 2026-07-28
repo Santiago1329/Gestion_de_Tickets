@@ -53,3 +53,17 @@
         </li>
     </ul>
 </div>
+
+<script>
+    (function () {
+        const tituloOriginal = document.title.replace(/^\(\d+\)\s*/, '');
+
+        function actualizarTitulo(cantidad) {
+            document.title = cantidad > 0 ? `(${cantidad}) ${tituloOriginal}` : tituloOriginal;
+        }
+
+        window.addEventListener('notif-contador-actualizado', (e) => {
+            actualizarTitulo(e.detail.total);
+        });
+    })();
+</script>
