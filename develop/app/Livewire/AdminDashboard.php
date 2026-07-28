@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use App\Models\Ticket;
 use App\Models\Categoria;
+use App\Notifications\TicketEstadoActualizado;
 
 class AdminDashboard extends Component
 {
@@ -84,6 +85,8 @@ class AdminDashboard extends Component
             'estado' => $this->editarEstado,
             'prioridad' => $this->editarPrioridad,
         ]);
+
+        $ticket->user->notify(new TicketEstadoActualizado($ticket));
 
         $this->reset(['ticketEditarId', 'editarEstado', 'editarPrioridad', 'estadosDisponibles']);
         $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'El ticket ha sido actualizado');

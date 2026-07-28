@@ -5,6 +5,9 @@ namespace App\Livewire;
 use App\Events\NuevoMensaje;
 use App\Models\Mensaje;
 use App\Models\Ticket;
+use App\Models\User;
+use App\Notifications\NuevoMensajeChat;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -50,6 +53,13 @@ class TicketChat extends Component
         ]);
 
         broadcast(new NuevoMensaje($mensaje))->toOthers();
+
+        // Notificar al otro lado de la conversación
+        if (auth()->user()->rol === 'admin') {
+            $this->ticket->user->notify(new NuevoMensajeChat($mensaje));
+        } else {
+            Notification::send(User::where('rol', 'admin')->get(), new NuevoMensajeChat($mensaje));
+        }
 
         $this->reset('nuevoMensaje');
         $this->dispatch('chat-scroll-abajo');

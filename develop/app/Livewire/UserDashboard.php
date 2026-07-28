@@ -7,6 +7,10 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use App\Models\Ticket;
 use App\Models\Categoria;
+use App\Models\User;
+use App\Notifications\NuevoTicketCreado;
+use App\Notifications\TicketCambioEstadoPorUsuario;
+use Illuminate\Support\Facades\Notification;
 
 class UserDashboard extends Component
 {
@@ -53,16 +57,18 @@ class UserDashboard extends Component
         }
 
         // Crear el nuevo ticket
-        Ticket::create([
+        $ticket = Ticket::create([
             'titulo' => $this->titulo,
             'descripcion' => $this->descripcion,
             'archivo_adjunto' => $rutaArchivo,
             'categoria_id' => $this->categoria_id,
             'telefono' => $this->telefono,
             'user_id' => auth()->id(),
-            'estado' => 'abierto', // Estado inicial del ticket
-            'prioridad' => 'media', // Prioridad por defecto
+            'estado' => 'abierto',
+            'prioridad' => 'media',
         ]);
+
+        Notification::send(User::where('rol', 'admin')->get(), new NuevoTicketCreado($ticket));
 
         // Limpiar el formulario después de guardar
         $this->reset(['titulo', 'descripcion', 'archivo_adjunto', 'categoria_id', 'telefono']);
@@ -85,6 +91,7 @@ class UserDashboard extends Component
         $ticket = Ticket::where('id', $id)->where('user_id', auth()->id())->first();
         if ($ticket && in_array($ticket->estado, ['abierto', 'en_proceso'])) {
             $ticket->update(['estado' => 'cancelado']);
+            Notification::send(User::where('rol', 'admin')->get(), new TicketCambioEstadoPorUsuario($ticket));
             $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido cancelado exitosamente');
         }
     }
@@ -95,6 +102,7 @@ class UserDashboard extends Component
         $ticket = Ticket::where('id', $id)->where('user_id', auth()->id())->first();
         if ($ticket && $ticket->estado === 'resuelto') {
             $ticket->update(['estado' => 're_abierto']);
+            Notification::send(User::where('rol', 'admin')->get(), new TicketCambioEstadoPorUsuario($ticket));
             $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido reabierto exitosamente');
         }
     }
