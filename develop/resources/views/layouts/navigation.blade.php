@@ -17,6 +17,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item d-flex align-items-center gap-3">
+                    @livewire('notificaciones-dropdown')
+
                     <div class="d-flex align-items-center gap-2">
                         <div class="rounded-circle d-flex align-items-center justify-content-center"
                             style="width:30px;height:30px;background-color:var(--color-primary-light);border:2px solid var(--color-primary);">
