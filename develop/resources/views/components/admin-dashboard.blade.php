@@ -101,7 +101,27 @@
                         <option value="alta">Alta</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-6 d-flex justify-content-end">
+                <div class="col-6 col-md-2">
+                    <select wire:model="reporteMes" class="form-select form-select-sm">
+                        @foreach (range(1, 12) as $m)
+                            <option value="{{ $m }}">{{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-6 col-md-2">
+                    <select wire:model="reporteAnio" class="form-select form-select-sm">
+                        @foreach (range(now()->year, now()->year - 1) as $y)
+                            <option value="{{ $y }}">{{ $y }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-md-2">
+                    <button class="btn btn-outline-success btn-sm w-100 fw-bold" wire:click="generarReporte" wire:loading.attr="disabled" wire:target="generarReporte">
+                        <span wire:loading.remove wire:target="generarReporte"><i class="fa-solid fa-file-excel me-1"></i> Reporte</span>
+                        <span wire:loading wire:target="generarReporte">Generando...</span>
+                    </button>
+                </div>
+                <div class="col-12 col-md-4 d-flex justify-content-end">
                     <button class="btn btn-primary px-3 fw-bold" wire:loading.attr="disabled" wire:click="abrirModalCrear" data-bs-target="#modalCrearTicket">
                         <i class="fa-solid fa-plus me-1"></i> Nuevo Ticket
                     </button>

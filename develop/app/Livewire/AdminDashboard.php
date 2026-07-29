@@ -8,6 +8,8 @@ use Livewire\WithPagination;
 use App\Models\Ticket;
 use App\Models\Categoria;
 use App\Notifications\TicketEstadoActualizado;
+use App\Exports\TicketsMensualExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminDashboard extends Component
 {
@@ -17,6 +19,10 @@ class AdminDashboard extends Component
     public $filtroEstado = '';
     public $filtroCategoria = '';
     public $filtroPrioridad = '';
+
+    // Reportes a excel
+    public $reporteMes;
+    public $reporteAnio;
 
     // Modal crear Ticket
     public $titulo;
@@ -44,6 +50,12 @@ class AdminDashboard extends Component
     {
         $this->ticketDetalle = Ticket::with(['categoria', 'user'])->findOrFail($id);
         $this->dispatch('abrirModalDetalle');
+    }
+
+    public function mount()
+    {
+        $this->reporteMes = now()->month;
+        $this->reporteAnio = now()->year;
     }
 
     // Abrir modal de chat
@@ -138,6 +150,22 @@ class AdminDashboard extends Component
 
         $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Ticket creado exitosamente.');
         $this->dispatch('cerrarModalCrear');
+    }
+
+    // Generar y descargar el reporte mensual en Excel
+    public function generarReporte()
+    {
+        $this->validate([
+            'reporteMes' => 'required|integer|between:1,12',
+            'reporteAnio' => 'required|integer|min:2000|max:' . (now()->year + 1),
+        ]);
+
+        $nombreArchivo = "Reporte-tics-{$this->reporteAnio}-" . str_pad($this->reporteMes, 2, '0', STR_PAD_LEFT) . ".xlsx";
+
+        return Excel::download(
+            new TicketsMensualExport($this->reporteMes, $this->reporteAnio),
+            $nombreArchivo
+        );
     }
 
     // Metodos de reseteo
