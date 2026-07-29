@@ -249,5 +249,8 @@
         window.addEventListener('abrirModalChat', () => {
             bootstrap.Modal.getOrCreateInstance(document.getElementById('modalChat')).show();
         });
+        window.addEventListener('cerrarModalReporte', () => {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalReporte')).hide();
+        });
     </script>
 </div>

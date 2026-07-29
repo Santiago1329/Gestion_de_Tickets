@@ -160,6 +160,8 @@ class AdminDashboard extends Component
             'reporteAnio' => 'required|integer|min:2000|max:' . (now()->year + 1),
         ]);
 
+        $this->dispatch('cerrarModalReporte');
+
         $nombreArchivo = "Reporte-tics-{$this->reporteAnio}-" . str_pad($this->reporteMes, 2, '0', STR_PAD_LEFT) . ".xlsx";
 
         return Excel::download(
