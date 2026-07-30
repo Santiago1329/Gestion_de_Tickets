@@ -11,12 +11,23 @@
         <li class="d-flex align-items-center justify-content-between px-3 py-2 border-bottom"
             style="border-color: var(--color-border) !important;">
             <span class="fw-semibold small">Notificaciones</span>
-            @if($noLeidas > 0)
-                <button wire:click="marcarTodasLeidas" class="btn btn-sm p-0 border-0 text-primary"
-                    style="font-size:0.75rem; background:none;">
-                    Marcar todas leídas
+            <div class="d-flex align-items-center gap-2">
+                <button
+                    type="button"
+                    onclick="activarNotificacionesPush('{{ config('webpush.vapid.public_key') }}')"
+                    class="btn btn-sm p-0 border-0 text-muted"
+                    style="font-size:0.85rem; background:none;"
+                    title="Activar notificaciones de escritorio"
+                >
+                    <i class="fa-solid fa-desktop"></i>
                 </button>
-            @endif
+                @if($noLeidas > 0)
+                    <button wire:click="marcarTodasLeidas" class="btn btn-sm p-0 border-0 text-primary"
+                        style="font-size:0.75rem; background:none;">
+                        Marcar todas leídas
+                    </button>
+                @endif
+            </div>
         </li>
 
         <li class="notif-lista">
