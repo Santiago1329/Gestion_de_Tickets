@@ -6,6 +6,8 @@ use App\Models\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class NuevoTicketCreado extends Notification implements ShouldQueue
 {
@@ -17,7 +19,7 @@ class NuevoTicketCreado extends Notification implements ShouldQueue
 
     public function via(object $notifiable): array
     {
-        return ['database', 'broadcast'];
+        return ['database', 'broadcast', WebPushChannel::class];
     }
 
     public function toArray(object $notifiable): array
@@ -35,5 +37,14 @@ class NuevoTicketCreado extends Notification implements ShouldQueue
     public function toBroadcast(object $notifiable): array
     {
         return $this->toArray($notifiable);
+    }
+
+    public function toWebPush($notifiable, $notification): WebPushMessage
+    {
+        return (new WebPushMessage)
+            ->title('Nuevo ticket creado')
+            ->body("{$this->ticket->user->name}: \"{$this->ticket->titulo}\"")
+            ->icon('/favicon.ico')
+            ->data(['url' => '/admin/dashboard']);
     }
 }
