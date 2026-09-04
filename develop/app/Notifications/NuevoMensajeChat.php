@@ -20,6 +20,13 @@ class NuevoMensajeChat extends Notification implements ShouldQueue
 
     public function via(object $notifiable): array
     {
+        if (env('NATIVEPHP_ACTIVE', false)) {
+            \Native\Desktop\Facades\Notification::title("Nuevo mensaje de {$this->mensaje->user->name}")
+                ->message(Str::limit($this->mensaje->mensaje, 80))
+                ->show();
+            
+            return ['database', 'broadcast'];
+        }
         return ['database', 'broadcast', WebPushChannel::class];
     }
 

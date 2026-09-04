@@ -20,6 +20,13 @@ class TicketEstadoActualizado extends Notification implements ShouldQueue
     // Canales por los que se envía: se guarda en BD y se transmite en vivo por Reverb.
     public function via(object $notifiable): array
     {
+        if (env('NATIVEPHP_ACTIVE', false)) {
+            \Native\Desktop\Facades\Notification::title('Actualización de tu ticket')
+                ->message("Tu ticket TIC-" . str_pad($this->ticket->id, 4, '0', STR_PAD_LEFT) . " cambió a estado \"{$this->estadoLegible()}\"")
+                ->show();
+            
+            return ['database', 'broadcast'];
+        }
         return ['database', 'broadcast', WebPushChannel::class];
     }
 

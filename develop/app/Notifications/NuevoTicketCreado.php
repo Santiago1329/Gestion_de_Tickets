@@ -19,6 +19,13 @@ class NuevoTicketCreado extends Notification implements ShouldQueue
 
     public function via(object $notifiable): array
     {
+        if (env('NATIVEPHP_ACTIVE', false)) {
+            \Native\Desktop\Facades\Notification::title('Nuevo ticket creado')
+                ->message("{$this->ticket->user->name}: \"{$this->ticket->titulo}\"")
+                ->show();
+            
+            return ['database', 'broadcast'];
+        }
         return ['database', 'broadcast', WebPushChannel::class];
     }
 
