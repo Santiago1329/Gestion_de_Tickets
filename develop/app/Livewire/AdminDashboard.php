@@ -98,7 +98,11 @@ class AdminDashboard extends Component
             'prioridad' => $this->editarPrioridad,
         ]);
 
-        $ticket->user->notify(new TicketEstadoActualizado($ticket));
+        if (env('NATIVEPHP_ACTIVE', false)) {
+            $ticket->user->notifyNow(new TicketEstadoActualizado($ticket));
+        } else {
+            $ticket->user->notify(new TicketEstadoActualizado($ticket));
+        }
 
         $this->reset(['ticketEditarId', 'editarEstado', 'editarPrioridad', 'estadosDisponibles']);
         $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'El ticket ha sido actualizado');

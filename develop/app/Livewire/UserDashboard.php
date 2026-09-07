@@ -68,7 +68,12 @@ class UserDashboard extends Component
             'prioridad' => 'media',
         ]);
 
-        Notification::send(User::where('rol', 'admin')->get(), new NuevoTicketCreado($ticket));
+        $admins = User::where('rol', 'admin')->get();
+        if (env('NATIVEPHP_ACTIVE', false)) {
+            $admins->each->notifyNow(new NuevoTicketCreado($ticket));
+        } else {
+            Notification::send($admins, new NuevoTicketCreado($ticket));
+        }
 
         // Limpiar el formulario después de guardar
         $this->reset(['titulo', 'descripcion', 'archivo_adjunto', 'categoria_id', 'telefono']);
@@ -91,7 +96,14 @@ class UserDashboard extends Component
         $ticket = Ticket::where('id', $id)->where('user_id', auth()->id())->first();
         if ($ticket && in_array($ticket->estado, ['abierto', 'en_proceso'])) {
             $ticket->update(['estado' => 'cancelado']);
-            Notification::send(User::where('rol', 'admin')->get(), new TicketCambioEstadoPorUsuario($ticket));
+
+            $admins = User::where('rol', 'admin')->get();
+            if (env('NATIVEPHP_ACTIVE', false)) {
+                $admins->each->notifyNow(new TicketCambioEstadoPorUsuario($ticket));
+            } else {
+                Notification::send($admins, new TicketCambioEstadoPorUsuario($ticket));
+            }
+
             $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido cancelado exitosamente');
         }
     }
@@ -102,7 +114,14 @@ class UserDashboard extends Component
         $ticket = Ticket::where('id', $id)->where('user_id', auth()->id())->first();
         if ($ticket && $ticket->estado === 'resuelto') {
             $ticket->update(['estado' => 're_abierto']);
-            Notification::send(User::where('rol', 'admin')->get(), new TicketCambioEstadoPorUsuario($ticket));
+
+            $admins = User::where('rol', 'admin')->get();
+            if (env('NATIVEPHP_ACTIVE', false)) {
+                $admins->each->notifyNow(new TicketCambioEstadoPorUsuario($ticket));
+            } else {
+                Notification::send($admins, new TicketCambioEstadoPorUsuario($ticket));
+            }
+
             $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido reabierto exitosamente');
         }
     }
