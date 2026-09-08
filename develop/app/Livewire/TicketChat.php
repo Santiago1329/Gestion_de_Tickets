@@ -62,7 +62,12 @@ class TicketChat extends Component
                 $this->ticket->user->notify(new NuevoMensajeChat($mensaje));
             }
         } else {
-            Notification::send(User::where('rol', 'admin')->get(), new NuevoMensajeChat($mensaje));
+            $admins = User::where('rol', 'admin')->get();
+            if (env('NATIVEPHP_ACTIVE', false)) {
+                $admins->each->notifyNow(new NuevoMensajeChat($mensaje));
+            } else {
+                Notification::send($admins, new NuevoMensajeChat($mensaje));
+            }
         }
 
         $this->reset('nuevoMensaje');
