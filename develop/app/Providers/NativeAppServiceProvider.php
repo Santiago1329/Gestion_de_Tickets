@@ -14,7 +14,6 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function boot(): void
     {
         Window::open()
-        ->url('http://localhost:8000')
         ->title('Gestion TICS')
         ->width(1280)
         ->height(800);
