@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -13,18 +14,23 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class TicketsMensualExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize, WithTitle, WithStyles
 {
+    protected int $mes;
+    protected int $anio;
+
     public function __construct(
-        protected int $mes,
-        protected int $anio
-    ) {}
+        string|Carbon $fechaInicio,
+        string|Carbon $fechaFin
+    ) {
+        $this->fechaInicio = Carbon::parse($fechaInicio)->startOfDay();
+        $this->fechaFin = Carbon::parse($fechaFin)->endOfDay();
+    }
 
     // Trae solo los tickets creados en el mes/año indicado
     public function query()
     {
         return Ticket::query()
             ->with(['categoria', 'user'])
-            ->whereYear('created_at', $this->anio)
-            ->whereMonth('created_at', $this->mes)
+            ->whereBetween('created_at', [$this->fechaInicio, $this->fechaFin])
             ->orderBy('created_at');
     }
 
@@ -62,9 +68,19 @@ class TicketsMensualExport implements FromQuery, WithHeadings, WithMapping, Shou
 
     public function title(): string
     {
-        $meses = [1=>'Enero',2=>'Febrero',3=>'Marzo',4=>'Abril',5=>'Mayo',6=>'Junio',7=>'Julio',8=>'Agosto',9=>'Septiembre',10=>'Octubre',11=>'Noviembre',12=>'Diciembre'];
+        if ($this->fechaInicio->format('Y-m') === $this->fechaFin->format('Y-m')
+            && $this->fechaInicio->isStartOfMonth()
+            && $this->fechaFin->isEndOfMonth()
+        ) {
+            $meses = [
+                1=>'Enero',2=>'Febrero',3=>'Marzo',4=>'Abril',5=>'Mayo',6=>'Junio',
+                7=>'Julio',8=>'Agosto',9=>'Septiembre',10=>'Octubre',11=>'Noviembre',12=>'Diciembre'
+            ];
 
-        return $meses[$this->mes] . ' ' . $this->anio; // Ej: "Julio 2026"
+            return $meses[$this->fechaInicio->month] . ' ' . $this->fechaInicio->year;
+        }
+
+        return $this->fechaInicio->format('d-m-Y') . ' al ' . $this->fechaFin->format('d-m-Y');
     }
 
     public function styles(Worksheet $sheet)

@@ -10,6 +10,7 @@ use App\Models\Categoria;
 use App\Notifications\TicketEstadoActualizado;
 use App\Exports\TicketsMensualExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class AdminDashboard extends Component
 {
@@ -21,8 +22,11 @@ class AdminDashboard extends Component
     public $filtroPrioridad = '';
 
     // Reportes a excel
+    public string $tipoReporte = 'mes'; // mes o rango
     public $reporteMes;
     public $reporteAnio;
+    public $fechaInicio;
+    public $fechaFin;
 
     // Modal crear Ticket
     public $titulo;
@@ -56,6 +60,8 @@ class AdminDashboard extends Component
     {
         $this->reporteMes = now()->month;
         $this->reporteAnio = now()->year;
+        $this->fechaInicio = now()->startOfMonth()->toDateString();
+        $this->fechaFin = now()->toDateString();
     }
 
     // Abrir modal de chat
@@ -159,6 +165,31 @@ class AdminDashboard extends Component
     // Generar y descargar el reporte mensual en Excel
     public function generarReporte()
     {
+        if ($this->tipoReporte === 'rango') {
+            // Por rango de fecha
+            $this->validate([
+                'fechaInicio' => 'required|date',
+                'fechaFin' => 'required|date|after_or_equal:fechaInicio',
+            ], [
+                'fechaInicio.required' => 'La fecha de inicio es obligatoria.',
+                'fechaFin.required' => 'La fecha final es obligatoria.',
+                'fechaFin.after_or_equal' => 'La fecha final debe ser igual o posterior a la fecha de inicio.',
+            ]);
+
+            $start = Carbon::parse($this->fechaInicio);
+            $end = Carbon::parse($this->fechaFin);
+
+            $nombreArchivo = "Reporte-tics-{$start->format('Ymd')}-hasta-{$end->format('Ymd')}.xlsx";
+
+            $this->dispatch('cerrarModalReporte');
+
+            return Excel::download(
+                new TicketsMensualExport($this->fechaInicio, $this->fechaFin),
+                $nombreArchivo
+            );
+        }
+
+        // Por mes y año
         $this->validate([
             'reporteMes' => 'required|integer|between:1,12',
             'reporteAnio' => 'required|integer|min:2000|max:' . (now()->year + 1),
