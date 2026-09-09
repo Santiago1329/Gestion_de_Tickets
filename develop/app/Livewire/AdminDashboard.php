@@ -199,8 +199,11 @@ class AdminDashboard extends Component
 
         $nombreArchivo = "Reporte-tics-{$this->reporteAnio}-" . str_pad($this->reporteMes, 2, '0', STR_PAD_LEFT) . ".xlsx";
 
+        $start = now()->setYear($this->reporteAnio)->setMonth($this->reporteMes)->startOfMonth();
+        $end = $start->copy()->endOfMonth();
+
         return Excel::download(
-            new TicketsMensualExport($this->reporteMes, $this->reporteAnio),
+            new TicketsMensualExport($start, $end),
             $nombreArchivo
         );
     }
