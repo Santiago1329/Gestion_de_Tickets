@@ -14,8 +14,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class TicketsMensualExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize, WithTitle, WithStyles
 {
-    protected int $mes;
-    protected int $anio;
+    protected Carbon $fechaInicio;
+    protected Carbon $fechaFin;
 
     public function __construct(
         string|Carbon $fechaInicio,
