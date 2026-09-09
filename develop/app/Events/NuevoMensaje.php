@@ -40,6 +40,7 @@ class NuevoMensaje implements ShouldBroadcast
         return [
             'id' => $this->mensaje->id,
             'mensaje' => $this->mensaje->mensaje,
+            'imagen' => $this->mensaje->imagen ? asset('storage/' . $this->mensaje->imagen) : null,
             'ticket_id' => $this->mensaje->ticket_id,
             'user_id' => $this->mensaje->user_id,
             'user_name' => $this->mensaje->user->name,
