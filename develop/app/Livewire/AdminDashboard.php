@@ -179,7 +179,7 @@ class AdminDashboard extends Component
             $start = Carbon::parse($this->fechaInicio);
             $end = Carbon::parse($this->fechaFin);
 
-            $nombreArchivo = "Reporte-tics-{$start->format('Ymd')}-hasta-{$end->format('Ymd')}.xlsx";
+            $nombreArchivo = "Reporte-tics-{$start->format('Y-m-d')}-hasta-{$end->format('Y-m-d')}.xlsx";
 
             $this->dispatch('cerrarModalReporte');
 
