@@ -10,12 +10,17 @@ use App\Notifications\NuevoMensajeChat;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class TicketChat extends Component
 {
+    use WithFileUploads;
+
     public Ticket $ticket;
 
     public string $nuevoMensaje = '';
+
+    public $imagen = null;
 
     public function mount(Ticket $ticket)
     {
@@ -35,21 +40,38 @@ class TicketChat extends Component
         $this->dispatch('chat-scroll-abajo');
     }
 
+    public function quitarImagen(): void
+    {
+        $this->reset('imagen');
+    }
+
     public function enviarMensaje(): void
     {
         $this->validate([
             'nuevoMensaje' => 'required|string|max:2000',
+            'imagen' => 'nullable|image|max:5120', // 5MB
         ]);
+
+        if (empty(trim($this->nuevoMensaje)) && !$this->imagen) {
+            $this->addError('nuevoMensaje', 'Escribe un mensaje o adjunta una imagen.');
+            return;
+        }
 
         if ($this->ticket->estado === 'cancelado') {
             $this->dispatch('mostrarToast', tipo: 'error', mensaje: 'No puedes enviar mensajes en un ticket cancelado.');
             return;
         }
 
+        $rutaImagen = null;
+        if ($this->imagen) {
+            $rutaImagen = $this->imagen->store('chat-imagenes', 'public');
+        }
+
         $mensaje = Mensaje::create([
             'ticket_id' => $this->ticket->id,
             'user_id' => auth()->id(),
             'mensaje' => trim($this->nuevoMensaje),
+            'imagen' => $rutaImagen,
         ]);
 
         broadcast(new NuevoMensaje($mensaje))->toOthers();
@@ -70,7 +92,7 @@ class TicketChat extends Component
             }
         }
 
-        $this->reset('nuevoMensaje');
+        $this->reset('nuevoMensaje', 'imagen');
         $this->dispatch('chat-scroll-abajo');
     }
 
