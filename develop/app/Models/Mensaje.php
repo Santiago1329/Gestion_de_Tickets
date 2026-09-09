@@ -11,6 +11,7 @@ class Mensaje extends Model
 
     protected $fillable = [
         'mensaje',
+        'imagen',
         'ticket_id',
         'user_id',
         'leido_at',
