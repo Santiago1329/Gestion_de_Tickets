@@ -48,7 +48,7 @@ class TicketChat extends Component
     public function enviarMensaje(): void
     {
         $this->validate([
-            'nuevoMensaje' => 'required|string|max:2000',
+            'nuevoMensaje' => 'nullable|string|max:2000',
             'imagen' => 'nullable|image|max:5120', // 5MB
         ]);
 
