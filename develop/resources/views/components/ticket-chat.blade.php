@@ -75,10 +75,10 @@
                     const items = $event.clipboardData?.items;
                     if (!items) return;
                     for (const item of items) {
-                        if (item.type.startWith('image/')) {
+                        if (item.type.startsWith('image/')) {
                             $event.preventDefault();
                             const file = item.getAsFile();
-                            $wire:upload('imagen', file);
+                            $wire.upload('imagen', file);
                         }
                     }
                 "
