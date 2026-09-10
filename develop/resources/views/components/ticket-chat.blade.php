@@ -70,6 +70,18 @@
                 placeholder="Escribe un mensaje..."
                 class="form-control @error('nuevoMensaje') is-invalid @enderror"
                 autocomplete="off"
+                x-data
+                x-on:paste="
+                    const items = $event.clipboardData?.items;
+                    if (!items) return;
+                    for (const item of items) {
+                        if (item.type.startWith('image/')) {
+                            $event.preventDefault();
+                            const file = item.getAsFile();
+                            $wire:upload('imagen', file);
+                        }
+                    }
+                "
             >
             <button type="submit">
                 <i class="fa-solid fa-paper-plane" style="color: #fff; font-size: 0.85rem;"></i>
