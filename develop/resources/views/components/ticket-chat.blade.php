@@ -2,9 +2,12 @@
     <div
         id="chat-mensajes-{{ $ticket->id }}"
         wire:ignore.self
-        x-data
-        x-init="$el.scrollTop = $el.scrollHeight"
-        x-on:chat-scroll-abajo.window="setTimeout(() => { $el.scrollTop = $el.scrollHeight }, 50)"
+        x-data="{ scrollAbajo() { this.$el.scrollTop = this.$el.scrollHeight; } }"
+        x-init="
+            scrollAbajo();
+            new MutationObserver(() => scrollAbajo()).observe($el, { childList: true, subtree: true });
+            new ResizeObserver(() => scrollAbajo()).observe($el);
+        "
         class="chat-mensajes p-3 rounded-3 mb-3"
         style="height: 340px; overflow-y: auto;"
     >
