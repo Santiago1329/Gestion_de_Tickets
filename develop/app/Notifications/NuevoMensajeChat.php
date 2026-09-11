@@ -36,7 +36,12 @@ class NuevoMensajeChat extends Notification implements ShouldQueue
             'tipo' => 'nuevo_mensaje',
             'ticket_id' => $this->mensaje->ticket_id,
             'de' => $this->mensaje->user->name,
-            'mensaje' => Str::limit($this->mensaje->mensaje, 60),
+            'mensaje' => "Nuevo mensaje de {$this->mensaje->user->name}: " . 
+                ($this->mensaje->imagen ? '📷 ' : '') .
+                ($this->mensaje->mensaje 
+                    ? '"' . Str::limit($this->mensaje->mensaje, 80) . '"'
+                    : 'Imagen'
+                ),
         ];
     }
 
