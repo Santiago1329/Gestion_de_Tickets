@@ -415,3 +415,7 @@ body {
     color: var(--color-text-muted);
     margin-top: 2px;
 }
+
+[x-cloak] {
+    display: none !important;
+}

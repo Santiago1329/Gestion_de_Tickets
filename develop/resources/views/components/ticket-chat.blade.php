@@ -58,10 +58,27 @@
             </div>
         @endif
 
+        <div id="subiendo-imagen-{{ $ticket->id }}" style="display: none;" class="align-items-center gap-2 mb-2 text-muted small">
+            <span class="spinner-border spinner-border-sm"></span>
+            Subiendo imagen...
+        </div>
+
         <div class="d-flex gap-2">
-            <label class="btn btn-outline-secondary mb-0 d-flex align-items-center" style="cursor: pointer;">
+            <label
+                class="btn btn-outline-secondary mb-0 d-flex align-items-center"
+                style="cursor: pointer;"
+                wire:loading.class="disabled"
+                wire:target="imagen"
+            >
                 <i class="fa-solid fa-paperclip"></i>
-                <input type="file" wire:model="imagen" accept="image/*" style="display: none;">
+                <input
+                    type="file"
+                    wire:model="imagen"
+                    accept="image/*"
+                    style="display: none;"
+                    wire:loading.attr="disabled"
+                    wire:target="imagen"
+                >
             </label>
 
             <input
@@ -70,20 +87,25 @@
                 placeholder="Escribe un mensaje..."
                 class="form-control @error('nuevoMensaje') is-invalid @enderror"
                 autocomplete="off"
-                x-data
+                wire:loading.attr="disabled"
+                wire:target="imagen"
                 x-on:paste="
                     const items = $event.clipboardData?.items;
                     if (!items) return;
                     for (const item of items) {
                         if (item.type.startsWith('image/')) {
                             $event.preventDefault();
-                            const file = item.getAsFile();
-                            $wire.upload('imagen', file);
+                            const indicador = document.getElementById('subiendo-imagen-{{ $ticket->id }}');
+                            indicador.style.display = 'flex';
+                            $wire.upload('imagen', item.getAsFile(),
+                                () => { indicador.style.display = 'none'; },
+                                () => { indicador.style.display = 'none'; }
+                            );
                         }
                     }
                 "
             >
-            <button type="submit">
+            <button type="submit" wire:loading.attr="disabled" wire:target="imagen">
                 <i class="fa-solid fa-paper-plane" style="color: #fff; font-size: 0.85rem;"></i>
             </button>
         </div>
