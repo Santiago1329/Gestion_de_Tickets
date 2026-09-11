@@ -58,7 +58,13 @@
             </div>
         @endif
 
-        <div id="subiendo-imagen-{{ $ticket->id }}" style="display: none;" class="align-items-center gap-2 mb-2 text-muted small">
+        <div 
+            id="subiendo-imagen-{{ $ticket->id }}" 
+            wire:loading.flex
+            wire:target="imagen"
+            style="display: none;" 
+            class="align-items-center gap-2 mb-2 text-muted small"
+        >
             <span class="spinner-border spinner-border-sm"></span>
             Subiendo imagen...
         </div>
