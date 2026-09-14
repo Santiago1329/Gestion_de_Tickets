@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('es.admin')
         ->name('admin.dashboard');
 
+    // Panel de dispositivos
+    Route::get('/admin/dispositivos', \App\Livewire\PanelDispositivos::class)
+    ->middleware('es.admin')
+    ->name('dispositivos.index');
+
     Route::post('/push/subscribe', [App\Http\Controllers\PushSubscriptionController::class, 'store'])->name('push.subscribe');
 });
 
