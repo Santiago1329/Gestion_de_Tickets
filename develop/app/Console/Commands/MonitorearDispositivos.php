@@ -26,7 +26,7 @@ class MonitorearDispositivos extends Command
 
             $dispositivo->update([
                 'estado' => $nuevoEstado,
-                'ultimo_check' => now(),
+                'ultimo_check_at' => now(),
             ]);
 
             DispositivoCheck::create([
