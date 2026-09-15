@@ -61,9 +61,9 @@
                     <div class="kpi-icon kpi-icon-info">
                         <i class="fa-solid fa-clock"></i>
                     </div>
-                    <div>
-                        <h4 class="fw-bold mb-0 kpi-value-info small">
-                            {{ $dispositivos->max('ultimo_check_at')?->diffForHumans() ?? '-' }}
+                    <div style="min-height: 49px; display: flex; flex-direction: column; justify-content: center;">
+                        <h4 class="fw-bold mb-0 kpi-value-info" style="font-size: 0.95rem;">
+                            {{ ucfirst($dispositivos->max('ultimo_check_at')?->diffForHumans() ?? '-') }}
                         </h4>
                         <p class="text-secondary small mb-0">Último chequeo</p>
                     </div>
@@ -82,7 +82,7 @@
                 </div>
             @else
                 <div class="table-responsive">
-                    <div class="table table-hover align-middle mb-0">
+                    <table class="table table-hover align-middle mb-0">
                         <thead>
                             <tr class="border-bottom border-top">
                                 <th class="ps-3">Estado</th>
@@ -110,7 +110,7 @@
                                 <td class="font-monospace small text-muted">{{ $dispositivo->ip }}</td>
                                 <td class="small">{{ $dispositivo->sede ?? '-' }}</td>
                                 <td class="small text-muted">
-                                    {{ $dispositivo->ultimo_check_at?->diffForHumans() ?? '-' }}
+                                    {{ ucfirst($dispositivos->max('ultimo_check_at')?->diffForHumans() ?? '-') }}
                                 </td>
                                 <!-- <td class="text-end pe-3">
                                     <a href="http://{{ $dispositivo->ip }}" target="_blank" class="btn btn-sm btn-outline-secondary py-1 px-2">
@@ -120,7 +120,7 @@
                             </tr>
                             @endforeach
                         </tbody>
-                    </div>
+                    </table>
                 </div>
             @endif
         </div>
