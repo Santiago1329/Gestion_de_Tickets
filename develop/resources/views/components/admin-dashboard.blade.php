@@ -6,7 +6,11 @@
             <h3 class="mb-1 fw-bold">Panel de Administración</h3>
             <p class="text-muted small mb-0">Gestiona todos los tickets de soporte</p>
         </div>
-        <span class="badge-role d-none d-sm-inline-block">{{ auth()->user()->rol }}</span>
+        <span class="badge-role d-none d-sm-inline-block">
+            <a href="{{ route('dispositivos.index') }}" class="btn btn-sm btn-outline-success fw-bold">
+                <i class="fa-solid fa-server me-1"></i> Dispositivos
+            </a>
+        </span>
     </div>
 
     <!-- Tarjetas Resumen -->

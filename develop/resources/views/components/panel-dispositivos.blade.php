@@ -5,7 +5,11 @@
             <h3 class="mb-1 fw-bold">Monitoreo de Dispositivos</h3>
             <p class="text-secondary small mb-0">Estado de red en tiempo real</p>
         </div>
-        <span class="badge-role d-none d-sm-inline-block">{{ auth()->user()->rol }}</span>
+        <span class="badge-role d-none d-sm-inline-block">
+            <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-outline-success fw-semibold">
+                <i class="fa-solid fa-arrow-left me-1"></i> Volver
+            </a>
+        </span>
     </div>
 
     <div class="row g-3 mb-4">
