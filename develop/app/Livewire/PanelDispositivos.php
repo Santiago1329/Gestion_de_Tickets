@@ -13,7 +13,7 @@ class PanelDispositivos extends Component
 
     public function render()
     {
-        return view('components.panel-dispostivos', [
+        return view('components.panel-dispositivos', [
             'dispositivos' => Dispositivo::orderBy('sede')->orderBy('nombre')->get()
         ])->layout('layouts.app');
     }
