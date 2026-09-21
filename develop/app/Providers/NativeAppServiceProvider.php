@@ -14,6 +14,10 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function boot(): void
     {
         Window::open()
+        ->url('http://localhost:8000')
+        ->webPreferences([
+            'partition' => 'persist:gestiontics',
+        ])
         ->title('Gestion TICS')
         ->width(1280)
         ->height(800);
@@ -25,6 +29,14 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function phpIni(): array
     {
         return [
+            'extension=pdo_mysql',
+            'extension=mysqli',
+            'extension=openssl',
+            'extension=curl',
+            'extension=mbstring',
+            'extension=fileinfo',
+            'extension=gd',
+            'extension=zip',
         ];
     }
 }
