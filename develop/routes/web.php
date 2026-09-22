@@ -30,6 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin-dashboard', AdminDashboard::class)
         ->middleware('es.admin')
         ->name('admin.dashboard');
+
+    // Panel de dispositivos
+    Route::get('/admin/dispositivos', \App\Livewire\PanelDispositivos::class)
+    ->middleware('es.admin')
+    ->name('dispositivos.index');
 });
 
 // RUTA SOLO PARA DESARROLLO, PERMITE INICIAR SESIÓN COMO CUALQUIER USUARIO POR SU ID
