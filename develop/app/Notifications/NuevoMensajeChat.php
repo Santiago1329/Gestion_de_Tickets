@@ -18,13 +18,21 @@ class NuevoMensajeChat extends Notification implements ShouldQueue
 
     public function via(object $notifiable): array
     {
+        return ['database', 'broadcast'];
+    }
+
+    public function toDatabase(object $notifiable): array
+    {
         if (env('NATIVEPHP_ACTIVE', false)) {
             \Native\Desktop\Facades\Notification::title("Nuevo mensaje de {$this->mensaje->user->name}")
-                ->message(Str::limit($this->mensaje->mensaje, 80))
+                ->message($this->mensaje->mensaje
+                    ? Str::limit($this->mensaje->mensaje, 80)
+                    : 'Imagen'
+                )
                 ->show();
         }
 
-        return ['database', 'broadcast'];
+        return $this->toArray($notifiable);
     }
 
     public function toArray(object $notifiable): array

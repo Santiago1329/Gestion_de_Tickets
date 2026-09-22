@@ -15,8 +15,12 @@ class TicketEstadoActualizado extends Notification implements ShouldQueue
     {
     }
 
-    // Canales por los que se envía: se guarda en BD y se transmite en vivo por Reverb.
     public function via(object $notifiable): array
+    {
+        return ['database', 'broadcast'];
+    }
+
+    public function toDatabase(object $notifiable): array
     {
         if (env('NATIVEPHP_ACTIVE', false)) {
             \Native\Desktop\Facades\Notification::title('Actualización de tu ticket')
@@ -24,7 +28,7 @@ class TicketEstadoActualizado extends Notification implements ShouldQueue
                 ->show();
         }
 
-        return ['database', 'broadcast'];
+        return $this->toArray($notifiable);
     }
 
     // Lo que se guarda en la columna `data` de la tabla notifications.

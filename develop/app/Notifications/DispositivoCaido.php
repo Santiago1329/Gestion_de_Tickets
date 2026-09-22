@@ -6,8 +6,6 @@ use App\Models\Dispositivo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\WebPush\WebPushChannel;
-use NotificationChannels\WebPush\WebPushMessage;
 
 class DispositivoCaido extends Notification implements ShouldQueue
 {
@@ -19,11 +17,7 @@ class DispositivoCaido extends Notification implements ShouldQueue
 
     public function via(object $notifiable): array
     {
-        if (env('NATIVEPHP_ACTIVE', false)) {
-            return ['database', 'broadcast'];
-        }
-
-        return ['database', 'broadcast', WebPushChannel::class];
+        return ['database', 'broadcast'];
     }
 
     public function toArray(object $notifiable): array
@@ -49,14 +43,5 @@ class DispositivoCaido extends Notification implements ShouldQueue
         }
 
         return $this->toArray($notifiable);
-    }
-
-    public function toWebPush($notifiable, $notification): WebPushMessage
-    {
-        return (new WebPushMessage)
-            ->title('Dispositivo caído')
-            ->body("{$this->dispositivo->nombre} ({$this->dispositivo->ip}) no responde")
-            ->icon('/favicon.ico')
-            ->data(['url' => '/admin/dispositivos']);
     }
 }
