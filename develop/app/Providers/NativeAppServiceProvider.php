@@ -28,15 +28,6 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function phpIni(): array
     {
-        return [
-            'extension=pdo_mysql',
-            'extension=mysqli',
-            'extension=openssl',
-            'extension=curl',
-            'extension=mbstring',
-            'extension=fileinfo',
-            'extension=gd',
-            'extension=zip',
-        ];
+        return [];
     }
 }
