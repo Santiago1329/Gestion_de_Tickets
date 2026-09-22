@@ -17,7 +17,7 @@ class DispositivoCaido extends Notification implements ShouldQueue
 
     public function via(object $notifiable): array
     {
-        return ['database', 'broadcast'];
+        return ['database', 'broadcast', \App\Channels\TelegramChannel::class];
     }
 
     public function toArray(object $notifiable): array
@@ -43,5 +43,10 @@ class DispositivoCaido extends Notification implements ShouldQueue
         }
 
         return $this->toArray($notifiable);
+    }
+
+    public function toTelegram(object $notifiable): string
+    {
+        return $this->toArray($notifiable)['mensaje'];
     }
 }

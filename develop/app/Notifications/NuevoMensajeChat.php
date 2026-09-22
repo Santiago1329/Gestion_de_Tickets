@@ -18,7 +18,7 @@ class NuevoMensajeChat extends Notification implements ShouldQueue
 
     public function via(object $notifiable): array
     {
-        return ['database', 'broadcast'];
+        return ['database', 'broadcast', \App\Channels\TelegramChannel::class];
     }
 
     public function toDatabase(object $notifiable): array
@@ -53,5 +53,10 @@ class NuevoMensajeChat extends Notification implements ShouldQueue
     public function toBroadcast(object $notifiable): array
     {
         return $this->toArray($notifiable);
+    }
+
+    public function toTelegram(object $notifiable): string
+    {
+        return $this->toArray($notifiable)['mensaje'];
     }
 }
