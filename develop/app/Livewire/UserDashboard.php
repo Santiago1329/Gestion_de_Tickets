@@ -69,11 +69,7 @@ class UserDashboard extends Component
         ]);
 
         $admins = User::where('rol', 'admin')->get();
-        if (env('NATIVEPHP_ACTIVE', false)) {
-            $admins->each->notifyNow(new NuevoTicketCreado($ticket));
-        } else {
-            Notification::send($admins, new NuevoTicketCreado($ticket));
-        }
+        $admins->each->notifyNow(new NuevoTicketCreado($ticket));
 
         // Limpiar el formulario después de guardar
         $this->reset(['titulo', 'descripcion', 'archivo_adjunto', 'categoria_id', 'telefono']);
@@ -98,11 +94,7 @@ class UserDashboard extends Component
             $ticket->update(['estado' => 'cancelado']);
 
             $admins = User::where('rol', 'admin')->get();
-            if (env('NATIVEPHP_ACTIVE', false)) {
-                $admins->each->notifyNow(new TicketCambioEstadoPorUsuario($ticket));
-            } else {
-                Notification::send($admins, new TicketCambioEstadoPorUsuario($ticket));
-            }
+            $admins->each->notifyNow(new TicketCambioEstadoPorUsuario($ticket));
 
             $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido cancelado exitosamente');
         }
@@ -116,11 +108,7 @@ class UserDashboard extends Component
             $ticket->update(['estado' => 're_abierto']);
 
             $admins = User::where('rol', 'admin')->get();
-            if (env('NATIVEPHP_ACTIVE', false)) {
-                $admins->each->notifyNow(new TicketCambioEstadoPorUsuario($ticket));
-            } else {
-                Notification::send($admins, new TicketCambioEstadoPorUsuario($ticket));
-            }
+            $admins->each->notifyNow(new TicketCambioEstadoPorUsuario($ticket));
 
             $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'Tu ticket ha sido reabierto exitosamente');
         }

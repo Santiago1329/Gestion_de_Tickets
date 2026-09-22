@@ -78,18 +78,10 @@ class TicketChat extends Component
 
         // Notificar al otro lado de la conversación
         if (auth()->user()->rol === 'admin') {
-            if (env('NATIVEPHP_ACTIVE', false)) {
-                $this->ticket->user->notifyNow(new NuevoMensajeChat($mensaje));
-            } else {
-                $this->ticket->user->notify(new NuevoMensajeChat($mensaje));
-            }
+            $this->ticket->user->notifyNow(new NuevoMensajeChat($mensaje));
         } else {
             $admins = User::where('rol', 'admin')->get();
-            if (env('NATIVEPHP_ACTIVE', false)) {
-                $admins->each->notifyNow(new NuevoMensajeChat($mensaje));
-            } else {
-                Notification::send($admins, new NuevoMensajeChat($mensaje));
-            }
+            $admins->each->notifyNow(new NuevoMensajeChat($mensaje));
         }
 
         $this->reset('nuevoMensaje', 'imagen');

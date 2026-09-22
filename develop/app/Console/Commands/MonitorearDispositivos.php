@@ -38,11 +38,7 @@ class MonitorearDispositivos extends Command
             // Envia notificación solo si el estado ha cambiado a offline
             if ($estadoAnterior !== 'offline' && $nuevoEstado === 'offline') {
                 $admins = User::where('rol', 'admin')->get();
-                if (env('NATIVEPHP_ACTIVE', false)) {
-                    $admins->each->notifyNow(new DispositivoCaido($dispositivo));
-                } else {
-                    Notification::send($admins, new DispositivoCaido($dispositivo));
-                }
+                $admins->each->notifyNow(new DispositivoCaido($dispositivo));
             }
 
             $this->info("{$dispositivo->nombre} ({$dispositivo->ip}): {$nuevoEstado}");
