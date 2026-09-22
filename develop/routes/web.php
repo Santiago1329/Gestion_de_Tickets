@@ -30,8 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin-dashboard', AdminDashboard::class)
         ->middleware('es.admin')
         ->name('admin.dashboard');
-
-    Route::post('/push/subscribe', [App\Http\Controllers\PushSubscriptionController::class, 'store'])->name('push.subscribe');
 });
 
 // RUTA SOLO PARA DESARROLLO, PERMITE INICIAR SESIÓN COMO CUALQUIER USUARIO POR SU ID

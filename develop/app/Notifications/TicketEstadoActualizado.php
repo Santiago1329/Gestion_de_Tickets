@@ -6,8 +6,6 @@ use App\Models\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use NotificationChannels\WebPush\WebPushChannel;
-use NotificationChannels\WebPush\WebPushMessage;
 
 class TicketEstadoActualizado extends Notification implements ShouldQueue
 {
@@ -24,10 +22,9 @@ class TicketEstadoActualizado extends Notification implements ShouldQueue
             \Native\Desktop\Facades\Notification::title('Actualización de tu ticket')
                 ->message("Tu ticket TIC-" . str_pad($this->ticket->id, 4, '0', STR_PAD_LEFT) . " cambió a estado \"{$this->estadoLegible()}\"")
                 ->show();
-            
-            return ['database', 'broadcast'];
         }
-        return ['database', 'broadcast', WebPushChannel::class];
+
+        return ['database', 'broadcast'];
     }
 
     // Lo que se guarda en la columna `data` de la tabla notifications.
@@ -46,16 +43,6 @@ class TicketEstadoActualizado extends Notification implements ShouldQueue
     public function toBroadcast(object $notifiable): array
     {
         return $this->toArray($notifiable);
-    }
-
-    // Lo que se envía por WebPush (notificación push en el sistema)
-    public function toWebPush($notifiable, $notification): WebPushMessage
-    {
-        return (new WebPushMessage)
-            ->title('Actualización de tu ticket')
-            ->body("Tu ticket TIC-" . str_pad($this->ticket->id, 4, '0', STR_PAD_LEFT) . " cambió a estado \"{$this->estadoLegible()}\"")
-            ->icon('/favicon.ico')
-            ->data(['url' => '/user/dashboard']);
     }
 
     private function estadoLegible(): string

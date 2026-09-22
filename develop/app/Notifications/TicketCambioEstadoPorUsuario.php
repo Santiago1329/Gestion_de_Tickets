@@ -6,8 +6,6 @@ use App\Models\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use NotificationChannels\WebPush\WebPushChannel;
-use NotificationChannels\WebPush\WebPushMessage;
 
 class TicketCambioEstadoPorUsuario extends Notification implements ShouldQueue
 {
@@ -23,10 +21,9 @@ class TicketCambioEstadoPorUsuario extends Notification implements ShouldQueue
             \Native\Desktop\Facades\Notification::title('Cambio en un ticket')
                 ->message("{$this->ticket->user->name} {$accion} el ticket \"{$this->ticket->titulo}\"")
                 ->show();
-            
-            return ['database', 'broadcast'];
         }
-        return ['database', 'broadcast', WebPushChannel::class];
+
+        return ['database', 'broadcast'];
     }
 
     public function toArray(object $notifiable): array
@@ -46,16 +43,5 @@ class TicketCambioEstadoPorUsuario extends Notification implements ShouldQueue
     public function toBroadcast(object $notifiable): array
     {
         return $this->toArray($notifiable);
-    }
-
-    public function toWebPush($notifiable, $notification): WebPushMessage
-    {
-        $accion = $this->ticket->estado === 'cancelado' ? 'canceló' : 'reabrió';
-
-        return (new WebPushMessage)
-            ->title('Cambio en un ticket')
-            ->body("{$this->ticket->user->name} {$accion} el ticket \"{$this->ticket->titulo}\"")
-            ->icon('/favicon.ico')
-            ->data(['url' => '/admin/dashboard']);
     }
 }
