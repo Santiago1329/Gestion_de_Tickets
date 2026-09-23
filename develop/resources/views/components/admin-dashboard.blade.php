@@ -219,19 +219,19 @@
     </div>
 
     <!-- Modal Ver Detalle -->
-    @include('components.modals.ver-detalle')
+    @include('components.modals.dashboard-modals.ver-detalle')
 
     <!-- Modal Editar Ticket -->
-    @include('components.modals.editar-ticket')
+    @include('components.modals.dashboard-modals.editar-ticket')
 
     <!-- Modal Crear Ticket -->
-    @include('components.modals.crear-ticket')
+    @include('components.modals.dashboard-modals.crear-ticket')
 
     <!-- Modal Chat -->
-    @include('components.modals.chat-ticket')
+    @include('components.modals.dashboard-modals.chat-ticket')
 
     <!-- Modal Reporte Mensual -->
-    @include('components.modals.reporte-mensual')
+    @include('components.modals.dashboard-modals.reporte-mensual')
 
     <!-- Cerrar modales al terminar una accion -->
     <script>

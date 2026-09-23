@@ -192,7 +192,7 @@
     </div>
 
     <!-- Modal Chat -->
-    @include('components.modals.chat-ticket')
+    @include('components.modals.dashboard-modals.chat-ticket')
 
     <script>
         window.addEventListener('abrirModalChat', () => {
