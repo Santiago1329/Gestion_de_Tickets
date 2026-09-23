@@ -19,16 +19,6 @@ class TicketSeeder extends Seeder
             $this->call(CategoriaSeeder::class);
         }
 
-        $usuario = User::firstOrCreate(
-            ['email' => 'usuario.prueba@example.com'],
-            [
-                'name' => 'Usuario de Prueba',
-                'password' => bcrypt('password'),
-                'rol' => 'usuario',
-                'email_verified_at' => now(),
-            ]
-        );
-
         $categoriaIds = Categoria::pluck('id')->all();
 
         $tickets = [
