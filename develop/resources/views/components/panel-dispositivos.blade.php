@@ -9,7 +9,7 @@
                 <p class="text-muted small mb-0">Selecciona una sede para ver sus dispositivos</p>
             @endif
         </div>
-        <div>
+        <div class="d-flex flex-column align-items-end">
             @if($sedeSeleccionada)
                 <button wire:click="volverASedes" class="btn btn-outline-secondary fw-semibold mb-2 my-2 mx-4">
                     <i class="fa-solid fa-arrow-left me-1"></i> SEDES
@@ -25,9 +25,9 @@
     </div>
 
     @if(!$sedeSeleccionada)
-        <div class="row g-3">
+        <div class="row g-3 justify-content-center">
             @forelse($sedes as $s)
-                <div class="col-6 col-md-4 col-lg-3">
+                <div class="col-6 col-md-4">
                     <div class="card kpi-card border-0 shadow-sm" style="cursor:pointer;" wire:click="seleccionarSede('{{ $s->sede }}')">
                         <div class="card-body">
                             <h5 class="fw-bold mb-2">{{ $s->sede ?? 'Sin sede' }}</h5>
@@ -104,6 +104,14 @@
             </div>
         </div>
 
+        <div class="d-flex justify-content-end mb-3">
+            <button wire:click="abrirModalAgregar"
+                wire:loading.attr="disabled"
+                class="btn btn-primary fw-semibold mx-2">
+                <i class="fa-solid fa-plus me-1"></i> Agregar dispositivo
+            </button>
+        </div>
+
         <div class="card shadow-sm border-0">
             <div class="card-body p-0">
                 <table class="table table-hover align-middle mb-0">
@@ -129,7 +137,18 @@
                                     </span>
                                 </td>
                                 <td class="fw-semibold small">{{ $dispositivo->nombre }}</td>
-                                <td class="font-monospace small text-muted">{{ $dispositivo->ip }}</td>
+                                <td class="font-monospace small text-muted">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span>{{ $dispositivo->ip }}</span>
+                                        <button wire:click="abrirModalEditar({{ $dispositivo->id }})"
+                                            wire:loading.attr="disabled"
+                                            wire:target="abrirModalEditar"
+                                            class="btn btn-sm btn-outline-primary py-1 px-2"
+                                            title="Editar IP">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td class="small text-muted">{{ $dispositivo->ultimo_check_at?->diffForHumans() ?? 'nunca' }}</td>
                                 <td class="text-end pe-3">
                                     <a href="http://{{ $dispositivo->ip }}" target="_blank" class="btn btn-sm btn-outline-secondary py-1 px-2">
@@ -143,5 +162,29 @@
             </div>
         </div>
     @endif
+
+    <!-- Modal agregar dispositivo -->
+    @include('components.modals.monitoreo-modals.agregar-dispositivo')
+
+    <!-- Modal editar ip -->
+    @include('components.modals.monitoreo-modals.editar-ip')
+
+    <script>
+        window.addEventListener('abrirModalAgregarDispositivo', () => {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalAgregarDispositivo')).show();
+        });
+
+        window.addEventListener('cerrarModalAgregar', () => {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalAgregarDispositivo')).hide();
+        });
+
+        window.addEventListener('abrirModalEditarIp', () => {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalEditarIp')).show();
+        });
+
+        window.addEventListener('cerrarModalEditar', () => {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalEditarIp')).hide();
+        });
+    </script>
 
 </div>
