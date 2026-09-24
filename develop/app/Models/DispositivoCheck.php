@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\MassPrunable;
 
 class DispositivoCheck extends Model
 {
+    use MassPrunable;
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -21,5 +24,10 @@ class DispositivoCheck extends Model
     public function dispositivo()
     {
         return $this->belongsTo(Dispositivo::class);
+    }
+
+    public function prunable()
+    {
+        return static::where('checked_at', '<', now()->subDays(30));
     }
 }
