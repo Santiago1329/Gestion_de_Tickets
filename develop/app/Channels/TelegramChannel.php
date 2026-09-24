@@ -9,6 +9,10 @@ class TelegramChannel
 {
     public function send($notifiable, Notification $notification): void
     {
+        if ($notifiable->rol !== 'admin') {
+            return;
+        }
+
         $mensaje = $notification->toTelegram($notifiable);
 
         Http::post("https://api.telegram.org/bot" . config('services.telegram.bot_token') . "/sendMessage", [
