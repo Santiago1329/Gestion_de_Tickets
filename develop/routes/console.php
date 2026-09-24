@@ -8,4 +8,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('dispositivos:monitorear')->everyFiveMinutes();
+Schedule::command('dispositivos:monitorear')
+    ->everyFiveMinutes()
+    ->skip(fn () => config('nativephp-internal.running'));
