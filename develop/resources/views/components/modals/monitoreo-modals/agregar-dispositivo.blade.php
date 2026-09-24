@@ -27,15 +27,6 @@
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    <div class="mb-0">
-                        <label class="form-label fw-semibold small">Estado inicial</label>
-                        <select wire:model="estado" class="form-select form-select-sm">
-                            <option value="desconocido">Desconocido</option>
-                            <option value="online">En línea</option>
-                            <option value="offline">Caído</option>
-                        </select>
-                    </div>
                 </div>
 
                 <div class="modal-footer border-top">
