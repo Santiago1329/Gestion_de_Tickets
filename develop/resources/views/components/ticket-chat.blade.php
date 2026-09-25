@@ -29,8 +29,8 @@
 
                     <div class="chat-burbuja px-3 py-2 {{ $esPropio ? 'chat-burbuja-propia' : 'chat-burbuja-otro' }}">
                         @if ($msg->imagen)
-                            <a href="{{ asset('storage/' . $msg->imagen) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $msg->imagen) }}" class="chat-imagen-mensaje mb-1" style="max-width: 200px; border-radius: 8px; display: block;">
+                            <a href="{{ route('adjuntos.mensaje', $msg) }}" target="_blank">
+                                <img src="{{ route('adjuntos.mensaje', $msg) }}" class="chat-imagen-mensaje mb-1" style="max-width: 200px; border-radius: 8px; display: block;">
                             </a>
                         @endif
                         @if ($msg->mensaje)

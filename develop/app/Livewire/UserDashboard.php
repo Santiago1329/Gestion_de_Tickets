@@ -53,7 +53,7 @@ class UserDashboard extends Component
 
         // Si el usuario subio un archivo, lo guardamos en la carpeta 'archivos_adjuntos'
         if ($this->archivo_adjunto) {
-            $rutaArchivo = $this->archivo_adjunto->store('archivos_adjuntos', 'public');
+            $rutaArchivo = $this->archivo_adjunto->store('archivos_adjuntos', 'local');
         }
 
         // Crear el nuevo ticket

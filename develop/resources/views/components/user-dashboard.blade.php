@@ -136,7 +136,7 @@
                                             <td class="text-end pe-2">
                                                 <div class="d-flex justify-content-end gap-1">
                                                     @if ($ticket->archivo_adjunto)
-                                                        <a href="{{ asset('storage/' . $ticket->archivo_adjunto) }}"
+                                                        <a href="{{ route('adjuntos.ticket', $ticket) }}"
                                                             target="_blank"
                                                             class="btn btn-sm btn-outline-secondary py-1 px-2">
                                                             <i class="fa-solid fa-paperclip"></i>

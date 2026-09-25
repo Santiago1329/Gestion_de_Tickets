@@ -64,7 +64,7 @@ class TicketChat extends Component
 
         $rutaImagen = null;
         if ($this->imagen) {
-            $rutaImagen = $this->imagen->store('chat-imagenes', 'public');
+            $rutaImagen = $this->imagen->store('chat-imagenes', 'local');
         }
 
         $mensaje = Mensaje::create([

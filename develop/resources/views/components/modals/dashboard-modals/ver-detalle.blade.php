@@ -73,7 +73,7 @@
                     @if($ticketDetalle->archivo_adjunto || $ticketDetalle->telefono)
                         <div class="d-flex flex-wrap gap-2">
                             @if($ticketDetalle->archivo_adjunto)
-                                <a href="{{ asset('storage/' . $ticketDetalle->archivo_adjunto) }}"
+                                <a href="{{ route('adjuntos.ticket', $ticketDetalle) }}"
                                     target="_blank"
                                     class="btn btn-sm btn-outline-secondary">
                                     Ver adjunto

@@ -141,7 +141,7 @@ class AdminDashboard extends Component
 
         $rutaArchivo = null;
         if ($this->archivo_adjunto) {
-            $rutaArchivo = $this->archivo_adjunto->store('archivos_adjuntos', 'public');
+            $rutaArchivo = $this->archivo_adjunto->store('archivos_adjuntos', 'local');
         }
 
         Ticket::create([
