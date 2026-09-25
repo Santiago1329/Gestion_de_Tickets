@@ -99,12 +99,16 @@ class AdminDashboard extends Component
             'editarPrioridad' => 'required|in:baja,media,alta',
         ]);
 
+        $estadoAnterior = $ticket->estado;
+
         $ticket->update([
             'estado' => $this->editarEstado,
             'prioridad' => $this->editarPrioridad,
         ]);
 
-        $ticket->user->notifyNow(new TicketEstadoActualizado($ticket));
+        if ($estadoAnterior !== $this->editarEstado) {
+            $ticket->user->notifyNow(new TicketEstadoActualizado($ticket));
+        }
 
         $this->reset(['ticketEditarId', 'editarEstado', 'editarPrioridad', 'estadosDisponibles']);
         $this->dispatch('mostrarToast', tipo: 'exito', mensaje: 'El ticket ha sido actualizado');
