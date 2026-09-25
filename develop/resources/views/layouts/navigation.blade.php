@@ -2,11 +2,7 @@
     <div class="container-fluid px-4">
         <!-- Logo -->
         <a href="{{ route('dashboard') }}" class="navbar-brand d-flex align-items-center gap-2">
-            <div class="rounded d-flex align-items-center justify-content-center"
-                style="width:32px;height:32px;background-color:var(--color-primary);">
-                <i class="fa-solid fa-headset text-white" style="font-size:14px;"></i>
-            </div>
-            ESPA
+            <img src="{{ asset('images/logo.png') }}" alt="ESPA" style="height:32px;width:auto;">
         </a>
 
         <ul class="navbar-nav ms-auto">
