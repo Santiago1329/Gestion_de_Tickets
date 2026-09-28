@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Notifications\NuevoMensajeChat;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -47,6 +48,13 @@ class TicketChat extends Component
 
     public function enviarMensaje(): void
     {
+        $key = 'chat:' . auth()->id();
+        if (RateLimiter::tooManyAttempts($key, 30)) {
+            $this->addError('nuevoMensaje', 'Estás enviando mensajes muy rápido. Espera un momento.');
+            return;
+        }
+        RateLimiter::hit($key, 60);
+
         $this->validate([
             'nuevoMensaje' => 'nullable|string|max:2000',
             'imagen' => 'nullable|image|max:5120', // 5MB
