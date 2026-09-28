@@ -20,7 +20,8 @@ class NativeAppServiceProvider implements ProvidesPhpIni
         ])
         ->title('Gestion TICS')
         ->width(1280)
-        ->height(800);
+        ->height(800)
+        ->hideMenu();
     }
 
     /**
