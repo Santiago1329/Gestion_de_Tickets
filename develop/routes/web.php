@@ -63,12 +63,4 @@ Route::middleware('auth')->group(function () {
     })->name('adjuntos.mensaje');
 });
 
-// RUTA SOLO PARA DESARROLLO, PERMITE INICIAR SESIÓN COMO CUALQUIER USUARIO POR SU ID
-if (app()->environment('local')) {
-    Route::get('/dev-login/{userId}', function ($userId) {
-        auth()->loginUsingId($userId);
-        return redirect('/');
-    });
-}
-
 require __DIR__.'/auth.php';
