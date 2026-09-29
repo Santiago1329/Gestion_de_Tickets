@@ -72,6 +72,15 @@ return [
         'NATIVEPHP_AZURE_ENDPOINT',
         'NATIVEPHP_AZURE_CERTIFICATE_PROFILE_NAME',
         'NATIVEPHP_AZURE_CODE_SIGNING_ACCOUNT_NAME',
+
+        // Secretos del servidor - no los necesita la app de escritorio
+        'DB_*',
+        'APP_KEY',
+        'MICROSOFT_CLIENT_SECRET',
+        'MICROSOFT_TENANT_ID',
+        'REVERB_APP_SECRET',
+        'TELEGRAM_BOT_TOKEN',
+        'TELEGRAM_CHAT_ID',
     ],
 
     /**
